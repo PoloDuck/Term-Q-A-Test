@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>定期寿险 FAQ · 智能问答</title>
+<style>
+  :root{
+    --navy-900:#0d1b2e;
+    --navy-800:#132845;
+    --navy-700:#1c3660;
+    --ivory:#f6f2e8;
+    --ivory-dim:#e9e2d0;
+    --brass:#b98d4e;
+    --brass-bright:#d4ac6e;
+    --teal:#2b5f5a;
+    --ok:#3f7d5c;
+    --ok-bg:#e5efe5;
+    --warn:#a97a2b;
+    --warn-bg:#f5ecd9;
+    --no:#9c3b3b;
+    --no-bg:#f3e2e0;
+    --line: rgba(15,27,45,0.12);
+    --shadow: 0 10px 30px rgba(13,27,46,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(185,141,78,0.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(43,95,90,0.10), transparent 55%),
+      var(--ivory);
+    color:var(--navy-900);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .display{font-family:"Songti SC","STSong","Noto Serif SC","SimSun",serif;}
+
+  /* ---------- Header / Hero ---------- */
+  header.hero{
+    position:relative;
+    background:
+      linear-gradient(155deg, var(--navy-900) 0%, var(--navy-800) 55%, var(--navy-700) 100%);
+    color:var(--ivory);
+    padding:52px 24px 40px;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(246,242,232,0.045) 0px, rgba(246,242,232,0.045) 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(0deg, rgba(246,242,232,0.045) 0px, rgba(246,242,232,0.045) 1px, transparent 1px, transparent 64px);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:880px; margin:0 auto; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; letter-spacing:0.14em;
+    color:var(--brass-bright);
+    border:1px solid rgba(212,172,110,0.45);
+    padding:5px 12px 5px 10px;
+    border-radius:999px;
+    background:rgba(212,172,110,0.08);
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brass-bright);}
+  h1.title{
+    margin:18px 0 10px;
+    font-size:clamp(28px,4.4vw,42px);
+    line-height:1.25;
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+  h1.title .sub{
+    display:block;
+    font-family:"PingFang SC",sans-serif;
+    font-size:15px;
+    font-weight:400;
+    color:rgba(246,242,232,0.62);
+    margin-top:10px;
+    letter-spacing:0.02em;
+  }
+  .search-wrap{
+    margin-top:28px;
+    position:relative;
+  }
+  .search-seal{
+    position:absolute; left:18px; top:50%; transform:translateY(-50%);
+    width:22px; height:22px; opacity:0.75;
+  }
+  #searchInput{
+    width:100%;
+    padding:17px 52px 17px 52px;
+    font-size:16px;
+    border-radius:14px;
+    border:1px solid rgba(212,172,110,0.35);
+    background:rgba(246,242,232,0.06);
+    color:var(--ivory);
+    outline:none;
+    font-family:inherit;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  #searchInput::placeholder{color:rgba(246,242,232,0.45);}
+  #searchInput:focus{background:rgba(246,242,232,0.12); border-color:var(--brass-bright);}
+  .clear-btn{
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:rgba(246,242,232,0.55);
+    font-size:20px; cursor:pointer; display:none; line-height:1; padding:4px;
+  }
+  .clear-btn.show{display:block;}
+  .hero-meta{
+    margin-top:16px; font-size:13px; color:rgba(246,242,232,0.5);
+  }
+
+  /* ---------- Category chips ---------- */
+  .chips-bar{
+    max-width:880px; margin:-24px auto 0; padding:0 24px;
+    position:relative; z-index:2;
+  }
+  .chips{
+    display:flex; gap:8px; flex-wrap:wrap;
+    background:var(--ivory);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px;
+    box-shadow:var(--shadow);
+  }
+  .chip{
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--navy-800);
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13.5px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .15s ease;
+    display:flex; align-items:center; gap:6px;
+  }
+  .chip .count{
+    font-size:11px; color:rgba(13,27,46,0.4);
+    background:rgba(13,27,46,0.05);
+    border-radius:999px; padding:1px 6px;
+  }
+  .chip:hover{border-color:var(--brass); color:var(--brass);}
+  .chip.active{
+    background:var(--navy-900); border-color:var(--navy-900); color:var(--ivory);
+  }
+  .chip.active .count{background:rgba(246,242,232,0.15); color:var(--ivory);}
+
+  /* ---------- Main content ---------- */
+  main{max-width:880px; margin:0 auto; padding:28px 24px 90px;}
+
+  .result-count{
+    font-size:13px; color:rgba(13,27,46,0.5); margin:4px 4px 16px;
+  }
+  .result-count b{color:var(--navy-900);}
+
+  .empty-state{
+    text-align:center; padding:70px 20px; color:rgba(13,27,46,0.45);
+  }
+  .empty-state .glyph{font-size:34px; margin-bottom:10px; opacity:0.5;}
+  .empty-state .hint{font-size:13px; margin-top:6px;}
+
+  .card-list{display:flex; flex-direction:column; gap:10px;}
+
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{border-color:rgba(185,141,78,0.5);}
+  .card.open{box-shadow:var(--shadow); border-color:rgba(185,141,78,0.55);}
+
+  .card-head{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:16px 18px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .idx-badge{
+    flex:none;
+    width:30px; height:30px; border-radius:9px;
+    background:linear-gradient(155deg, var(--navy-800), var(--navy-700));
+    color:var(--brass-bright);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700;
+    font-family:"Songti SC",serif;
+    margin-top:1px;
+  }
+  .head-text{flex:1; min-width:0;}
+  .cat-label{
+    font-size:11px; letter-spacing:0.06em; color:var(--teal);
+    font-weight:600; margin-bottom:3px;
+  }
+  .q-text{
+    font-size:15.5px; font-weight:600; color:var(--navy-900); line-height:1.5;
+  }
+  .q-text mark, .a-body mark{
+    background:rgba(212,172,110,0.35); color:inherit; border-radius:3px; padding:0 1px;
+  }
+  .risk-dot{
+    flex:none; width:9px; height:9px; border-radius:50%; margin-top:8px;
+  }
+  .risk-ok{background:var(--ok);}
+  .risk-warn{background:var(--warn);}
+  .risk-no{background:var(--no);}
+  .chevron{
+    flex:none; margin-top:4px; color:rgba(13,27,46,0.35);
+    transition:transform .2s ease;
+    font-size:13px;
+  }
+  .card.open .chevron{transform:rotate(90deg); color:var(--brass);}
+
+  .card-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .28s ease;
+  }
+  .card.open .card-body{max-height:2400px;}
+  .a-inner{
+    padding:0 18px 20px 60px;
+    font-size:14.5px;
+    line-height:1.85;
+    color:#2a3648;
+  }
+  .a-inner p{margin:0 0 10px;}
+  .a-inner ul{margin:6px 0 12px; padding-left:20px;}
+  .a-inner li{margin-bottom:5px;}
+  .a-inner .note{
+    margin-top:10px;
+    background:var(--ivory-dim);
+    border-left:3px solid var(--brass);
+    padding:10px 12px;
+    border-radius:6px;
+    font-size:13.5px;
+    color:#3a3020;
+  }
+  .a-inner .tag{
+    display:inline-block; font-size:12px; padding:2px 9px; border-radius:999px;
+    margin:2px 6px 2px 0;
+  }
+  .tag-ok{background:var(--ok-bg); color:var(--ok);}
+  .tag-warn{background:var(--warn-bg); color:var(--warn);}
+  .tag-no{background:var(--no-bg); color:var(--no);}
+  .a-inner table{width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:13.5px;}
+  .a-inner th, .a-inner td{border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top;}
+  .a-inner th{background:var(--ivory-dim); font-weight:600;}
+
+  footer{
+    text-align:center; padding:26px 20px 40px;
+    font-size:12px; color:rgba(13,27,46,0.35);
+  }
+
+  @media (max-width:520px){
+    header.hero{padding:38px 16px 34px;}
+    .chips-bar{padding:0 16px;}
+    main{padding:22px 16px 70px;}
+    .a-inner{padding-left:18px;}
+    .idx-badge{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="dot"></span>新 JP 人寿 · 定期寿险</span>
+    <h1 class="title display">
+      定期寿险 FAQ 智能问答
+      <span class="sub">核保 · 投保 · 远程签单 · 付款 · 受益人 · 理赔 — 输入关键词即可检索</span>
+    </h1>
+    <div class="search-wrap">
+      <svg class="search-seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:#d4ac6e" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+      <input id="searchInput" type="text" placeholder="例如：高血压能不能投保、免体检额是多少、受益人未成年怎么办…" autocomplete="off">
+      <button class="clear-btn" id="clearBtn">×</button>
+    </div>
+    <div class="hero-meta" id="heroMeta">共 46 条问答 · 点击下方分类快速筛选</div>
+  </div>
+</header>
+
+<div class="chips-bar">
+  <div class="chips" id="chips"></div>
+</div>
+
+<main>
+  <div class="result-count" id="resultCount"></div>
+  <div class="card-list" id="cardList"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="glyph">🔍</div>
+    <div>没有找到匹配的问答</div>
+    <div class="hint">试试换个关键词，比如「结节」「保额」「转账」「体检」</div>
+  </div>
+</main>
+
+<footer>内容整理自《定期寿险 FAQ》250520 版 · 仅供内部答疑参考，具体条款以新 JP 人寿保险公司正式文件为准</footer>
+
+<script>
+const CATS = [
+  {id:'uw', name:'核保类'},
+  {id:'apply', name:'投保类'},
+  {id:'remote', name:'远程签单类'},
+  {id:'pay', name:'付款类型'},
+  {id:'benef', name:'受益人'},
+  {id:'claim', name:'赔付类'},
+  {id:'quote', name:'计划书/报价'},
+];
+
+const DATA = [
+// ========== 核保类 ==========
+{cat:'uw', q:'定寿可以预核保吗？', risk:'no', a:`
+  <p>定寿不支持预核保。</p>
+  <p>IUL（万能寿险）可以预核保。</p>
+`},
+{cat:'uw', q:'高血压可以投保吗？', risk:'warn', a:`
+  <p>仅仅只是血压偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
+  <p>客户需要提供半年内的血压报告（需医生同一天内连续测三次），报告需经过认证翻译成英文。</p>
+  <div class="note">如果客户还有其他问题，或叠加高血脂、肥胖、脂肪肝、多发结节，承保概率就很低了。</div>
+`},
+{cat:'uw', q:'糖尿病可以投保吗？', risk:'warn', a:`
+  <p>仅仅只是血糖偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
+  <p>客户需要半年内的以下报告，且需经过认证翻译成英文：</p>
+  <ul>
+    <li>血液检查 – 空腹血糖</li>
+    <li>血液检查 – 空腹糖化血红蛋白（HbA1c）</li>
+    <li>尿液微量分析（含尿糖结果）</li>
+  </ul>
+  <div class="note">如果客户还有其他问题，比如高血压、多发结节，或高血脂、肥胖、肾脏问题，承保概率就很低了。</div>
+`},
+{cat:'uw', q:'心脏病可以投保吗？', risk:'no', a:`
+  <p>不可以。定期寿险的定位就是核保严格，确诊心脏类型/心血管类型疾病很难承保。</p>
+  <div class="note">注意：确诊心脏类疾病一般要看心脏专科；有一些血液指标也能反映心脏风险，但不能作为确诊依据，仅仅血液指标偏高，通常是加费处理。<br><br>
+  比如血液指标 CRP，其升高与动脉粥样硬化和冠心病风险增加相关，可作为预测心血管事件的参考指标之一。当 CRP 浓度超过 3 毫克/升时，心血管风险会明显升高。</div>
+`},
+{cat:'uw', q:'有结节可以投保吗？', risk:'ok', a:`
+  <p>一般结节长期稳定，大多数可以投保定寿；如果是投保消费型重疾，有结节的器官会被除外。</p>
+  <ul>
+    <li>乳腺/甲状腺结节：小于等于三级</li>
+    <li>肺结节：长期稳定，且不是磨玻璃结节，大小不超过 5mm</li>
+  </ul>
+  <p>需要报告证明结节长期稳定，一般要求两次报告，前后间隔 6 个月且结节没有明显变化。报告需认证翻译成英文。</p>
+`},
+{cat:'uw', q:'吸烟会比不吸烟贵吗？', risk:'warn', a:`
+  <p>会，一般贵 20%。需如实申报吸烟与否，不管一年抽多少根，只要吸烟就按吸烟费率计算，<b>包括电子烟</b>。</p>
+  <div class="note">如购买保单后两年客户才开始吸烟，这种情况一般不影响后续保费。</div>
+`},
+{cat:'uw', q:'癌症痊愈后可以投保吗？', risk:'no', a:`
+  <p>定寿一般要求癌症痊愈超过 <b>10 年</b>。</p>
+  <p>案例参考：一位甲状腺乳头状癌（甲状腺癌中最常见、也最好治疗的类型）患者痊愈 7 年，投保定寿时每一家保险公司都被拒绝了。</p>
+  <p>IUL 一般癌症痊愈超过 5 年有希望承保。</p>
+`},
+{cat:'uw', q:'肿瘤标记物类型核保', risk:'warn', a:`
+  <p>如果客户肿瘤标记物高于正常值，定期寿险中一般直接拒保；除非客户能提供后续报告证明肿瘤标记物已回归正常值。</p>
+  <div class="note">
+  <b>医学逻辑：</b>肿瘤标记物高不代表一定患癌，该指标本身并不十分准确。<br>
+  确诊癌症的患者，在没有药物控制下肿瘤标记物一定偏高；但一些没有癌症的客户也可能出现指标偏高，例如 CA125（卵巢癌标记物）可能因卵巢囊肿或病毒性感冒等短期因素偏高，需要客户自证属于短期波动。
+  </div>
+  <p><b>IUL 对肿瘤标记物有一定包容空间，供参考：</b></p>
+  <ul>
+    <li>情况1：标记物偏高，但叠加辅助证明文件（如 CA125 偏高但卵巢 B 超正常），可以标准体投保。</li>
+    <li>情况2：长期标记物偏高，提供间隔一年的 2-3 次报告，确认无癌症，IUL 会视情况承保，可能加费也可能标准体。</li>
+  </ul>
+`},
+{cat:'uw', q:'还有哪些小众实操核保经验？', risk:'warn', a:`
+  <ul>
+    <li>中度呼吸暂停症 —— 加费 50%</li>
+    <li>CRP 偏高 + 高血脂 —— 加费 50%（CRP 升高与动脉粥样硬化、冠心病风险相关；当 CRP 浓度超过 3 毫克/升时，心血管风险明显升高）</li>
+    <li>CRP 80（正常值 10）+ 双肾各一结石 + 尿酸偏高 —— <b>拒保</b></li>
+  </ul>
+`},
+
+// ========== 投保类 ==========
+{cat:'apply', q:'投/被保人的关系只接受哪几种？', risk:'warn', a:`
+  <ul>
+    <li>自己给自己投保</li>
+    <li>给配偶投保</li>
+    <li>给未成年孩子投保</li>
+    <li>公司给 key person（关键人）投保，需文件证明其 key person 身份，比如持股证明 —— 一般 IUL 较多，定期寿险几乎没有这类案例</li>
+  </ul>
+`},
+{cat:'apply', q:'客户不会英文，需要 trusted individual 陪同，可以是什么类型的人？', risk:'warn', a:`
+  <p>如果客户不懂英文，必须有一位客户本人指定的、可信赖的人员陪同，即 "trusted individual"（信任个体）。</p>
+  <div class="note">需要注意：这位陪同人员不能与客户存在利益关联，例如转介绍人、合作伙伴等均不符合条件，因为可能引发利益冲突，不能担任客户的 trusted individual。</div>
+`},
+{cat:'apply', q:'定期寿险免体检额是多少？', risk:'ok', a:`
+  <p><b>非新加坡居民（无新加坡长期签证）</b></p>
+  <table>
+    <tr><th>年龄</th><th>免体检额</th></tr>
+    <tr><td>30 天 – 17 岁</td><td>75 万新币，约合 50 万美金</td></tr>
+    <tr><td>18 岁 – 50 岁</td><td>200 万新币，约合 140 万美金</td></tr>
+    <tr><td>51 岁 – 55 岁</td><td>100 万新币，约合 70 万美金</td></tr>
+    <tr><td>56 岁 – 60 岁</td><td>约 50 万新币，约合 35 万美金</td></tr>
+  </table>
+  <p><b>新加坡居民（公民/永居/工作签证）</b></p>
+  <table>
+    <tr><th>年龄</th><th>免体检额</th></tr>
+    <tr><td>30 天 – 17 岁</td><td>100 万新币，约合 70 万美金</td></tr>
+    <tr><td>18 岁 – 50 岁</td><td>250 万新币，约合 170 万美金</td></tr>
+    <tr><td>51 岁 – 55 岁</td><td>150 万新币，约合 100 万美金</td></tr>
+    <tr><td>56 岁 – 60 岁</td><td>约 50 万新币，约合 35 万美金</td></tr>
+  </table>
+`},
+{cat:'apply', q:'定期寿险最多可以保到多少岁？', risk:'ok', a:`
+  <p>新 JP 人寿定期寿险保障期限最长可至 <b>99 岁</b>。若被保险人在 99 岁前未发生身故，保险公司不会退还保费。</p>
+`},
+{cat:'apply', q:'最晚多少岁投保？', risk:'warn', a:`
+  <p>理论上最晚可至 <b>74 周岁</b>，但实际核保要求非常严格。</p>
+  <div class="note">对于 60 岁以上且保额超过免体检额的投保申请，成功承保的案例极少。</div>
+`},
+{cat:'apply', q:'可以选择的保障年限是多少？', risk:'ok', a:`
+  <p>到 85 岁之前可以灵活选择保障期；超过 85 岁，只有「保到 99 岁」一个选项。</p>
+`},
+{cat:'apply', q:'保障至 99 岁未发生死亡，会退保费吗？', risk:'no', a:`
+  <p>不退。但新 JP 人寿这款产品如果选择保至 99 岁 + Limited Pay（有限缴费期 5 年 / 10 年 / 到 65 岁 / 到 75 岁），就会有现金价值，可以退现金价值。</p>
+`},
+{cat:'apply', q:'Regular Pay 和 Limited Pay 区别是什么？', risk:'ok', a:`
+  <p><b>Regular Pay：</b>保障期和缴费期相同，例如保障期限 40 年、缴费期也是 40 年。这种形式通常是消费型的，没有任何现金价值，遵循「交一年管一年」的原则。</p>
+  <p><b>Limited Pay：</b>缴费期比保障期短，例如保障至 99 岁但缴费期仅 10 年。由于缴费期短于保障期，这种形式通常具有现金价值。</p>
+`},
+{cat:'apply', q:'定寿是不是均衡费率，保障期内保费不会增加？', risk:'ok', a:`<p>对，保障期内保费均衡，不会增加。</p>`},
+{cat:'apply', q:'如果叠加了重疾或全残，怎么赔付？等待期是多久？', risk:'ok', a:`
+  <p>人寿/全残部分没有等待期；如果附加重疾，重疾的等待期是 <b>90 天</b>。</p>
+  <p><b>叠加全残保障：</b></p>
+  <ul>
+    <li>全残保额通常等同于寿险保额（例如购买 140 万美金寿险叠加全残，全残保额也是 140 万美金）</li>
+    <li>若客户发生全残，保险公司赔付全额 140 万美金，合同终止</li>
+  </ul>
+  <p><b>叠加重疾保障：</b>从寿险总保额中划拨一部分用于重疾。例如 140 万美金寿险基础上叠加全残 + 20 万美金重疾：</p>
+  <ul>
+    <li>重疾赔付：确诊重疾赔付 20 万美金，剩余寿险及全残保额调整为 120 万美金；若还在缴费期内，赔付后保费相应减少，但不会完全豁免</li>
+    <li>全残赔付：若后续发生全残（未触发重疾），赔付剩余全额 120 万美金，合同终止</li>
+    <li>身故赔付：若直接身故且未触发重疾或全残，赔付剩余全额 140 万美金（含原重疾划拨部分）</li>
+  </ul>
+  <div class="note">重疾赔付后客户仍生存，需注意剩余保额的相应调整（如全残/身故保额相应减少）；全残赔付优先于身故赔付，即全残发生后合同终止。</div>
+`},
+{cat:'apply', q:'重大疾病都包括哪些？', risk:'ok', a:`
+  <p>新加坡人寿保险协会（LIA）受 MAS 监管，制定了 37 种重大疾病（Critical Illness）的标准化定义，涵盖主要癌症、心脑血管疾病、神经系统疾病等：</p>
+  <ul>
+    <li>严重癌症（Major Cancer）</li>
+    <li>严重心脏病发作（Heart Attack of Specified Severity）</li>
+    <li>持续性神经功能障碍的中风（Stroke with Permanent Neurological Deficit）</li>
+    <li>冠状动脉旁路手术（Coronary Artery Bypass Surgery）</li>
+    <li>末期肾功能衰竭（End Stage Kidney Failure）</li>
+    <li>不可逆性再生障碍性贫血（Aplastic Anaemia）</li>
+    <li>末期肺部疾病（End Stage Lung Disease）</li>
+    <li>末期肝功能衰竭（End Stage Liver Failure）</li>
+    <li>昏迷（Coma）</li>
+    <li>失聪 / 不可逆性听力丧失（Deafness）</li>
+    <li>开胸心脏瓣膜手术（Heart Valve Surgery）</li>
+    <li>失语 / 不可逆性语言丧失（Loss of Speech）</li>
+    <li>严重烧伤（Major Burns）</li>
+    <li>重要器官/骨髓移植（Major Organ/Bone Marrow Transplantation）</li>
+    <li>多发性硬化症（Multiple Sclerosis）</li>
+    <li>肌萎缩症（Muscular Dystrophy）</li>
+    <li>特发性帕金森病（Parkinson's Disease）</li>
+    <li>动脉开胸手术（Surgery to Aorta）</li>
+    <li>阿尔茨海默病/严重痴呆（Alzheimer's Disease/Severe Dementia）</li>
+    <li>急性肝炎（恶化型）（Fulminant Hepatitis）</li>
+    <li>运动神经元疾病（Motor Neurone Disease）</li>
+    <li>原发性肺动脉高压（Primary Pulmonary Hypertension）</li>
+    <li>HIV（血液输血和职业获得）</li>
+    <li>良性脑肿瘤（Benign Brain Tumour）</li>
+    <li>严重脑炎（Viral Encephalitis）</li>
+    <li>严重细菌性脑膜炎（Bacterial Meningitis）</li>
+    <li>冠状动脉血管成形术及其他侵入性治疗</li>
+    <li>失明 / 不可逆性视力丧失（Blindness）</li>
+    <li>重要头部创伤（Major Head Trauma）</li>
+    <li>瘫痪 / 四肢不可逆性丧失使用（Paralysis）</li>
+    <li>晚期疾病（Terminal Illness）</li>
+    <li>渐进性硬化性红斑狼疮（Progressive Scleroderma）</li>
+    <li>持续性植物人状态（Apallic Syndrome）</li>
+    <li>系统性红斑狼疮伴狼疮性肾炎</li>
+    <li>其他严重冠状动脉疾病</li>
+    <li>脊髓灰质炎（Poliomyelitis）</li>
+    <li>失去独立存在能力（Loss of Independent Existence）</li>
+  </ul>
+  <div class="note">此处 Critical Illness 指重大疾病的严重状态，不包含轻症状态（Early Critical Illness）。以严重癌症为例：不包括原位癌，甲状腺癌/前列腺癌等需超过 T1N0M0，更接近疾病危重状态。</div>
+`},
+{cat:'apply', q:'全残（TPD）具体如何定义？', risk:'ok', a:`
+  <p>新加坡定期寿险中的全残定义主要包含两种标准：</p>
+  <p><b>1. 躯体残疾标准：</b>双目及四肢（手腕及以下、脚踝及以下）这六个部位中，有两个或以上部位受损，导致永久性丧失工作能力，如双下肢瘫痪等。</p>
+  <p><b>2. 日常生活能力标准：</b>无法独立完成 6 项基本日常生活活动中的至少 3 项，包括：穿衣、移动（如从床上到椅子）、行动（行走）、如厕、进食、洗澡。</p>
+`},
+{cat:'apply', q:'可以买超过免体检额的保额吗？', risk:'warn', a:`
+  <p>可以，但需在新加坡完成体检。若保额超过免体检额，客户需在新加坡停留超过一周（通常从提交申请到收到体检通知函后，需预约诊所并完成体检）。</p>
+`},
+{cat:'apply', q:'有没有什么免责条款？', risk:'no', a:`
+  <ul>
+    <li>一年内自杀不保</li>
+    <li>如隐瞒身体状况，保险公司有权拒赔</li>
+  </ul>
+`},
+{cat:'apply', q:'一个人最多可以买多少保额？', risk:'ok', a:`
+  <p><b>寿险 & 全残保额限制（按年收入倍数）：</b></p>
+  <ul>
+    <li>≤ 40 岁：最高为年收入的 30 倍</li>
+    <li>41–50 岁：最高为年收入的 25 倍</li>
+    <li>51–60 岁：最高为年收入的 15 倍</li>
+    <li>＞ 60 岁：最高为年收入的 10 倍</li>
+  </ul>
+  <p><b>重大疾病保额限制：</b></p>
+  <ul>
+    <li>≤ 40 岁：最高为年收入的 15 倍</li>
+    <li>41–50 岁：最高为年收入的 10 倍</li>
+    <li>51–60 岁：最高为年收入的 8 倍</li>
+    <li>＞ 60 岁：最高为年收入的 5 倍</li>
+  </ul>
+`},
+{cat:'apply', q:'可以给孩子买定期寿险吗？', risk:'ok', a:`
+  <p>可以。无需财务证明，最多 75 万新币（约合 50 万美金）；超过则最高可投保额为以下二者中的较高值：</p>
+  <ul>
+    <li>相当于父母现有保单的保额</li>
+    <li>根据收入计算的父母符合条件保额的 50%</li>
+  </ul>
+`},
+{cat:'apply', q:'没有收入的人最多可以买多少定期寿险？', risk:'warn', a:`
+  <p>无需财务证明，最多 75 万新币（约合 50 万美金）；超过需提供证明材料，身故赔偿保额上限为以下三项中的最高值：</p>
+  <ul>
+    <li>相当于在职配偶现行有效保单的保额</li>
+    <li>根据收入计算的在职配偶符合条件保额的 50%</li>
+    <li>个人净资产的 30%</li>
+  </ul>
+`},
+{cat:'apply', q:'单张保费最低要求是多少？', risk:'ok', a:`
+  <p>单张 1000 美金以上（或等额新币，约 1400 新币）。保费可以通过延长缴费期、添加重疾/全残来增加；远程签单不可以体检，总保额通常控制在免体检额度内。</p>
+`},
+{cat:'apply', q:'可以接受的投保地区有哪些？', risk:'warn', a:`
+  <div class="note">注意：可以接受投保的地区不等同于可以远程签单的地区。以下是入境新加坡即可投保的地区；远程签单地区请参考「远程签单类」部分。费率从低到高：Residency 1 &lt; Residency 2 &lt; Residency 3，不在清单上的地区均不可投保。</div>
+  <p><b>Residency 1（费率最优）：</b>新加坡、马来西亚、印度尼西亚（主要城市）、中国（主要城市）、文莱、澳大利亚、英国、韩国、台湾地区、安道尔、奥地利、巴哈马、比利时、英属维尔京群岛、加拿大、开曼群岛、智利、中国、捷克共和国、丹麦、厄瓜多尔、芬兰、法国、德国、希腊、冰岛、爱尔兰、意大利、约旦、科威特、列支敦士登、卢森堡、马耳他、摩纳哥、荷兰、荷属安的列斯（现已解体）、新西兰、挪威、阿曼、葡萄牙、卡塔尔、圣马力诺、沙特阿拉伯、斯洛伐克、西班牙、圣基茨和尼维斯、瑞典、瑞士、泰国、特克斯和凯科斯群岛、阿联酋、美国、梵蒂冈城国</p>
+  <p><b>Residency 2：</b>印度尼西亚（非主要城市）、越南（新加坡籍）、印度（主要城市）、菲律宾、泰国、捷克共和国、巴林、科威特、南非（非主要城市）、牙买加、蒙特塞拉特、波兰、斯洛伐克、沙特阿拉伯、南非（主要城市）</p>
+  <p><b>Residency 3：</b>西萨摩亚、越南（非新加坡籍）、佛得角群岛、埃及、萨尔瓦多、危地马拉、洪都拉斯、斯里兰卡、斯里兰卡（科伦坡）</p>
+`},
+{cat:'apply', q:'需不需要申报在中国大陆和香港的寿险/重大疾病保额？', risk:'warn', a:`
+  <p>在新 JP 人寿保险公司申请的寿险额度没有超过 140 万美金是不需要体检的，但一个人的总保额需要符合财务核保逻辑。</p>
+  <ul>
+    <li>新加坡的寿险总保额超过 300 万美金，通常要填写 financial questionnaire（财务问卷）</li>
+    <li>超过 500 万美金，要提供具体财务证明</li>
+  </ul>
+  <p><b>寿险 & 全残保额限制：</b>≤40岁 30倍年收入 / 41-50岁 25倍 / 51-60岁 15倍 / ＞60岁 10倍</p>
+  <p><b>重大疾病保额限制：</b>≤40岁 15倍年收入 / 41-50岁 10倍 / 51-60岁 8倍 / ＞60岁 5倍</p>
+`},
+
+// ========== 远程签单类 ==========
+{cat:'remote', q:'免飞（远程签单）地区有哪些？', risk:'ok', a:`
+  <p>可以远程签单的客户仅限：</p>
+  <ul>
+    <li>中国主要城市（不含新疆、西藏）</li>
+    <li>中国香港</li>
+    <li>中国台湾</li>
+    <li>马来西亚</li>
+    <li>印尼主要城市</li>
+  </ul>
+`},
+{cat:'remote', q:'免飞入新加坡需要满足什么财务要求？', risk:'warn', a:`
+  <p>满足以下之一即可：</p>
+  <ul>
+    <li>年收入：12 万新币（可以是公司提供的收入证明）</li>
+    <li>或流动总资产：大于 20 万新币（可以是银行月结单、股票账户余额、支付宝余额）</li>
+  </ul>
+`},
+{cat:'remote', q:'免飞入新加坡的财务要求仅仅针对保单持有人吗？', risk:'ok', a:`
+  <p>对，被保人没有财务证明要求。</p>
+  <p>例如：若太太不符合财务要求，可由符合要求的先生作为投保人，太太作为被保人进行投保。需要注意，若被保人年龄超过 18 岁，需在远程签单时上线完成电子签名。</p>
+`},
+
+// ========== 付款类型问题 ==========
+{cat:'pay', q:'可以用第三方账户付款吗？', risk:'warn', a:`
+  <p>付款通常需要本人账户。如需用到其他人的账户付款，通常该账户必须是<b>直系亲属</b>的，且需要在投保时就申报使用直系亲属账户付款。</p>
+`},
+{cat:'pay', q:'中国客户常用的优选银行有哪些？', risk:'ok', a:`
+  <div class="note">以下银行通常内地分行不行，需要是港澳分行；部分特别标注仅新加坡分行。建议使用新加坡系银行。</div>
+  <ul>
+    <li>DBS Bank Ltd 星展银行</li>
+    <li>OCBC Bank 华侨银行</li>
+    <li>United Overseas Bank Limited 大华银行</li>
+    <li>Bank of America N.A 美国银行</li>
+    <li>Bank of China Limited Singapore Branch 中国银行（仅限新加坡支行）</li>
+    <li>China Construction Bank Corporation 中国建设银行</li>
+    <li>Citibank NA 花旗银行</li>
+    <li>Citibank Singapore Limited 花旗银行新加坡支行</li>
+    <li>HSBC 汇丰银行</li>
+    <li>HSBC Bank (Singapore) Limited 汇丰银行新加坡支行</li>
+    <li>Industrial and Commercial Bank of China Limited Singapore Branch 中国工商银行（仅限新加坡支行）</li>
+    <li>JPMorgan Chase Bank, N.A 摩根大通银行</li>
+    <li>Standard Chartered Bank (Singapore) 渣打银行（仅限新加坡支行）</li>
+  </ul>
+`},
+{cat:'pay', q:'付款长期需要用港澳账户/境外账户吗？', risk:'warn', a:`
+  <p>内地账户通常不能直接付款境外保单，客户需要长期拥有港澳账户来缴费。</p>
+`},
+{cat:'pay', q:'如何转账缴纳保费？', risk:'ok', a:`
+  <p>转账时备注保单号，记得选择转账手续费扣费在自己账户；如果银行 app 不能选择手续费扣在自己账户，建议多转 25 美金/30 新币，预留转账费用。</p>
+  <div class="note">如果新 JP 人寿保险公司收不到足额保费，会导致保单不能生效/失效。</div>
+  <p><b>收款人：</b>Singapore Life Ltd.<br>
+  <b>收款人（保司）地址：</b>4 Shenton Way, SGX Centre 2 #01-01, Singapore 068807<br>
+  <b>转账备注：</b>保单号 + 投保人姓名</p>
+  <p><b>美金保单（USD）</b><br>
+  收款银行：DBS Bank（新加坡星展银行）<br>
+  SWIFT 代码：DBSSSGSGXXX<br>
+  收款账号：0072-172757-01-1</p>
+  <p><b>新币保单（SGD）</b><br>
+  收款银行：DBS Bank（新加坡星展银行）<br>
+  SWIFT 代码：DBSSSGSGXXX<br>
+  收款账号：003-958595-0</p>
+`},
+{cat:'pay', q:'可以用信用卡付保费吗？', risk:'warn', a:`
+  <p>可以，境外/港澳信用卡可以，但<b>仅限第一年保费</b>。</p>
+`},
+
+// ========== 受益人 ==========
+{cat:'benef', q:'哪些人可以是受益人？', risk:'ok', a:`
+  <p>无限制关系：受益人可以是与被保险人无婚姻或血缘关系的任何人。</p>
+`},
+{cat:'benef', q:'受益人变更流程是怎样的？', risk:'ok', a:`
+  <p>灵活调整：受益人可随时更改，只需提交一份新的受益人表格，覆盖原信息即可生效。</p>
+`},
+{cat:'benef', q:'受益人未满 18 岁，发生理赔可以接受理赔款吗？', risk:'warn', a:`
+  <p>若受益人未满 18 岁，理赔款将支付至其监护人账户。</p>
+`},
+{cat:'benef', q:'可以设置多个受益人吗？', risk:'ok', a:`
+  <p>可以指定多个受益人，总分配比例需为 100%（例如：A 占 50%、B 占 30%、C 占 20%）。</p>
+`},
+{cat:'benef', q:'受益人表格如何填写？', risk:'ok', a:`
+  <p>请参照公司制作的受益人表格填写指南，填写完成后用投保时留存的邮箱发送到 <b>cs_life@singlife.com</b>，签名尽量与投保时签署的签名保持一致。</p>
+`},
+
+// ========== 赔付类 ==========
+{cat:'claim', q:'受益人一定要有海外账户吗？', risk:'warn', a:`
+  <p>一般大额赔付到内地账户相对困难，需要受益人拥有港澳/海外账户。</p>
+`},
+{cat:'claim', q:'理赔需要哪些文件？', risk:'ok', a:`
+  <p><b>寿险理赔：</b></p>
+  <ul>
+    <li>受益人填写的理赔申请表（claim form）</li>
+    <li>受益人身份证件</li>
+    <li>受益人银行账户信息</li>
+    <li>如生病死亡：需要由主治医生签字的理赔申请表（医生专用），明确标注理赔原因（用于筛查是否隐瞒既往病史）</li>
+    <li>如意外死亡：需要交通事故/意外事故报告</li>
+    <li>死亡证明：需提供经认证的英文翻译件</li>
+  </ul>
+  <p><b>重疾/全残理赔：</b></p>
+  <ul>
+    <li>患者本人填写的 claim form</li>
+    <li>患者身份证/护照</li>
+    <li>医生签字的理赔申请表</li>
+    <li>医学报告类：完整诊断报告、病理报告（如适用）、手术报告（如适用）</li>
+  </ul>
+  <div class="note">非英文文件需要翻译。</div>
+`},
+{cat:'claim', q:'理赔需要本人去新加坡吗？', risk:'ok', a:`
+  <p>不需要，远程提交文件电子版即可。</p>
+`},
+
+// ========== 计划书/报价 ==========
+{cat:'quote', q:'计划书/报价如何申请？', risk:'ok', a:`
+  <p><b>申请方式——邮件渠道</b></p>
+  <p>发送地址：<b>quote@pfplegacy.com</b></p>
+
+  <p><b>【定寿计划书信息模板】</b></p>
+  <div class="note">Sinxxxfe 可远程：50 岁及以下免体检额 140 万美金，51–55 岁免体检额 70 万美金</div>
+  <ul>
+    <li>出生年月日/年龄</li>
+    <li>性别</li>
+    <li>是否吸烟</li>
+    <li>常住地：内地/香港/台湾/其他请说明</li>
+    <li>是否需要附加全残以及保额（4.21 起需附加全残才可享受 7 折）</li>
+    <li>是否需要附加重疾以及保额</li>
+    <li>保障年限</li>
+    <li>保额</li>
+    <li>是否需要回溯到生日前（新加坡生日过后 6 个月内，可回溯）</li>
+  </ul>
+
+  <p><b>【IUL 及其他计划书模板】</b></p>
+  <ul>
+    <li>保司</li>
+    <li>产品</li>
+    <li>缴费年期</li>
+    <li>币别（美金/新币，IUL 只支持美金）</li>
+    <li>保额（如用保费推保额请明确年保费）</li>
+    <li>投保人年龄/性别</li>
+    <li>受保人年龄/性别</li>
+    <li>是否吸烟</li>
+    <li>居住地区</li>
+  </ul>
+
+  <p>计划书语言：中文或英文（目前大 DF、宏 L、全 M、永 M 均提供中文计划书）</p>
+  <div class="note">同事会尽快回复您。</div>
+`},
+];
+
+// assign stable ids
+DATA.forEach((d,i)=>d.id=i);
+
+const catMap = Object.fromEntries(CATS.map(c=>[c.id,c.name]));
+const riskLabel = {ok:'较易承保', warn:'视情况而定', no:'较难/不可承保'};
+
+let activeCat = 'all';
+let openId = null;
+
+// ---------- search scoring (character-bigram similarity, CJK-friendly) ----------
+function bigrams(str){
+  const s = (str||'').replace(/\s+/g,'').toLowerCase();
+  if(s.length < 2) return [s];
+  const arr = [];
+  for(let i=0;i<s.length-1;i++) arr.push(s.slice(i,i+2));
+  return arr;
+}
+function scoreText(query, text){
+  if(!query) return 0;
+  const q = query.trim().toLowerCase();
+  const t = (text||'').toLowerCase();
+  let s = 0;
+  if(t.includes(q)) s += 3 + q.length*0.15; // strong boost for direct substring
+  const qb = bigrams(q);
+  const tb = new Set(bigrams(t));
+  let hits = 0;
+  qb.forEach(b=>{ if(tb.has(b)) hits++; });
+  s += (hits/Math.max(qb.length,1)) * 2;
+  return s;
+}
+function itemScore(query, item){
+  const plainA = item.a.replace(/<[^>]+>/g,'');
+  return scoreText(query, item.q) * 2.2 + scoreText(query, plainA);
+}
+
+function highlight(text, query){
+  if(!query) return text;
+  const q = query.trim();
+  if(!q) return text;
+  try{
+    const esc = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    return text.replace(new RegExp(esc,'gi'), m=>`<mark>${m}</mark>`);
+  }catch(e){ return text; }
+}
+
+function renderChips(){
+  const chipsEl = document.getElementById('chips');
+  const allCount = DATA.length;
+  let html = `<div class="chip ${activeCat==='all'?'active':''}" data-cat="all">全部 <span class="count">${allCount}</span></div>`;
+  CATS.forEach(c=>{
+    const n = DATA.filter(d=>d.cat===c.id).length;
+    html += `<div class="chip ${activeCat===c.id?'active':''}" data-cat="${c.id}">${c.name} <span class="count">${n}</span></div>`;
+  });
+  chipsEl.innerHTML = html;
+  chipsEl.querySelectorAll('.chip').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      activeCat = el.dataset.cat;
+      render();
+    });
+  });
+}
+
+function getFiltered(){
+  const query = document.getElementById('searchInput').value.trim();
+  let list = DATA.slice();
+  if(activeCat !== 'all') list = list.filter(d=>d.cat===activeCat);
+
+  if(query){
+    list = list
+      .map(d=>({item:d, score:itemScore(query,d)}))
+      .filter(x=>x.score > 0.35)
+      .sort((a,b)=>b.score-a.score)
+      .map(x=>x.item);
+  }
+  return {list, query};
+}
+
+function render(){
+  renderChips();
+  const {list, query} = getFiltered();
+  const listEl = document.getElementById('cardList');
+  const emptyEl = document.getElementById('emptyState');
+  const countEl = document.getElementById('resultCount');
+
+  if(list.length === 0){
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    countEl.textContent = '';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  countEl.innerHTML = query
+    ? `找到 <b>${list.length}</b> 条相关问答`
+    : `共 <b>${list.length}</b> 条问答`;
+
+  listEl.innerHTML = list.map((item, i)=>{
+    const isOpen = openId === item.id;
+    const qHtml = highlight(item.q, query);
+    return `
+      <div class="card ${isOpen?'open':''}" data-id="${item.id}">
+        <div class="card-head" data-toggle="${item.id}">
+          <div class="idx-badge">${String(i+1).padStart(2,'0')}</div>
+          <div class="head-text">
+            <div class="cat-label">${catMap[item.cat]}</div>
+            <div class="q-text">${qHtml}</div>
+          </div>
+          <div class="risk-dot risk-${item.risk}" title="${riskLabel[item.risk]}"></div>
+          <div class="chevron">▶</div>
+        </div>
+        <div class="card-body">
+          <div class="a-inner">${item.a}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  listEl.querySelectorAll('[data-toggle]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const id = Number(el.dataset.toggle);
+      openId = (openId === id) ? null : id;
+      render();
+      if(openId === id){
+        requestAnimationFrame(()=>{
+          const card = listEl.querySelector(`.card[data-id="${id}"]`);
+          if(card) card.scrollIntoView({behavior:'smooth', block:'nearest'});
+        });
+      }
+    });
+  });
+}
+
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
+searchInput.addEventListener('input', ()=>{
+  clearBtn.classList.toggle('show', searchInput.value.length>0);
+  openId = null;
+  render();
+});
+clearBtn.addEventListener('click', ()=>{
+  searchInput.value='';
+  clearBtn.classList.remove('show');
+  render();
+  searchInput.focus();
+});
+
+render();
+</script>
+</body>
+</html>
