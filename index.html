@@ -112,19 +112,37 @@
   .hero-meta{
     margin-top:16px; font-size:13px; color:rgba(246,242,232,0.5);
   }
+  .disclaimer-bar{
+    margin-top:18px;
+    display:flex; align-items:flex-start; gap:10px;
+    background:rgba(212,172,110,0.10);
+    border:1px solid rgba(212,172,110,0.35);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:12.5px;
+    line-height:1.6;
+    color:rgba(246,242,232,0.78);
+  }
+  .disclaimer-bar .mark{
+    flex:none; color:var(--brass-bright); font-size:14px; line-height:1.5;
+  }
+  .disclaimer-bar b{color:var(--brass-bright); font-weight:600;}
 
   /* ---------- Category chips ---------- */
   .chips-bar{
     max-width:880px; margin:-24px auto 0; padding:0 24px;
     position:relative; z-index:2;
   }
-  .chips{
-    display:flex; gap:8px; flex-wrap:wrap;
+  .chips-box{
     background:var(--ivory);
     border:1px solid var(--line);
     border-radius:16px;
-    padding:14px;
     box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .chips{
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:14px;
   }
   .chip{
     border:1px solid var(--line);
@@ -148,6 +166,30 @@
     background:var(--navy-900); border-color:var(--navy-900); color:var(--ivory);
   }
   .chip.active .count{background:rgba(246,242,232,0.15); color:var(--ivory);}
+
+  .chips-sub{
+    display:flex; gap:7px; flex-wrap:wrap;
+    padding:10px 14px 14px;
+    border-top:1px dashed var(--line);
+  }
+  .chip-sub{
+    border:1px solid var(--line);
+    background:var(--ivory);
+    color:var(--teal);
+    padding:5px 11px;
+    border-radius:999px;
+    font-size:12.5px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .15s ease;
+    display:flex; align-items:center; gap:5px;
+  }
+  .chip-sub .count{
+    font-size:10.5px; color:rgba(43,95,90,0.55);
+  }
+  .chip-sub:hover{border-color:var(--teal);}
+  .chip-sub.active{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .chip-sub.active .count{color:rgba(255,255,255,0.8);}
 
   /* ---------- Main content ---------- */
   main{max-width:880px; margin:0 auto; padding:28px 24px 90px;}
@@ -278,12 +320,16 @@
       <input id="searchInput" type="text" placeholder="例如：高血压能不能投保、免体检额是多少、受益人未成年怎么办…" autocomplete="off">
       <button class="clear-btn" id="clearBtn">×</button>
     </div>
-    <div class="hero-meta" id="heroMeta">共 46 条问答 · 点击下方分类快速筛选</div>
+    <div class="hero-meta" id="heroMeta">点击下方分类快速筛选</div>
+    <div class="disclaimer-bar"><span class="mark">⚠</span><span><b>免责声明：</b>本页内容仅作内部交流与答疑参考，严禁对外转发、公开传播或挪作他用；产品具体条款与规则释义，均以正式签发的官方文件为准。</span></div>
   </div>
 </header>
 
 <div class="chips-bar">
-  <div class="chips" id="chips"></div>
+  <div class="chips-box">
+    <div class="chips" id="chips"></div>
+    <div class="chips-sub" id="chipsSub" style="display:none;"></div>
+  </div>
 </div>
 
 <main>
@@ -299,28 +345,54 @@
 <footer>内容整理自《定期寿险 FAQ》250520 版 · 仅供内部答疑参考，具体条款以新 JP 人寿保险公司正式文件为准</footer>
 
 <script>
-const CATS = [
+const GROUPS = [
   {id:'uw', name:'核保类'},
   {id:'apply', name:'投保类'},
   {id:'remote', name:'远程签单类'},
-  {id:'pay', name:'付款类型'},
+  {id:'pay', name:'付款类'},
   {id:'benef', name:'受益人'},
   {id:'claim', name:'赔付类'},
   {id:'quote', name:'计划书/报价'},
 ];
 
+// 子目录：每条问答归入更细的子分类，子分类归属于上面的一级分组(group)
+const CATS = [
+  {id:'uw-process', group:'uw', name:'核保流程与规则'},
+  {id:'uw-disease', group:'uw', name:'疾病与体况核保'},
+
+  {id:'apply-eligibility', group:'apply', name:'投保资格与地区'},
+  {id:'apply-limits', group:'apply', name:'保额与限额'},
+  {id:'apply-term', group:'apply', name:'保障期限与缴费方式'},
+  {id:'apply-benefit', group:'apply', name:'保障责任与定义'},
+
+  {id:'remote-region', group:'remote', name:'免飞地区范围'},
+  {id:'remote-finance', group:'remote', name:'财务要求'},
+  {id:'remote-client', group:'remote', name:'客户类型限制'},
+
+  {id:'pay-account', group:'pay', name:'账户要求'},
+  {id:'pay-method', group:'pay', name:'缴费方式'},
+
+  {id:'benef-rules', group:'benef', name:'受益人规则'},
+
+  {id:'claim-account', group:'claim', name:'账户要求'},
+  {id:'claim-process', group:'claim', name:'理赔流程与材料'},
+
+  {id:'quote-template', group:'quote', name:'计划书申请模板'},
+  {id:'quote-discount', group:'quote', name:'保费折扣'},
+];
+
 const DATA = [
 // ========== 核保类 ==========
-{cat:'uw', q:'定寿可以预核保吗？', risk:'no', a:`
-  <p>定寿不支持预核保。</p>
-  <p>IUL（万能寿险）可以预核保。</p>
+{cat:'uw-process', q:'定寿可以预核保吗？', risk:'warn', a:`
+  <p>如存在体况不确定是否能投保，可以先提交预核保。</p>
+  <div class="note">所有提交的医疗报告都需要是英文，或者需要由认证翻译机构翻译成英文的中文报告，<b>不接受 AI 翻译的医疗报告</b>。</div>
 `},
-{cat:'uw', q:'高血压可以投保吗？', risk:'warn', a:`
+{cat:'uw-disease', q:'高血压可以投保吗？', risk:'warn', a:`
   <p>仅仅只是血压偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
   <p>客户需要提供半年内的血压报告（需医生同一天内连续测三次），报告需经过认证翻译成英文。</p>
   <div class="note">如果客户还有其他问题，或叠加高血脂、肥胖、脂肪肝、多发结节，承保概率就很低了。</div>
 `},
-{cat:'uw', q:'糖尿病可以投保吗？', risk:'warn', a:`
+{cat:'uw-disease', q:'糖尿病可以投保吗？', risk:'warn', a:`
   <p>仅仅只是血糖偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
   <p>客户需要半年内的以下报告，且需经过认证翻译成英文：</p>
   <ul>
@@ -330,12 +402,12 @@ const DATA = [
   </ul>
   <div class="note">如果客户还有其他问题，比如高血压、多发结节，或高血脂、肥胖、肾脏问题，承保概率就很低了。</div>
 `},
-{cat:'uw', q:'心脏病可以投保吗？', risk:'no', a:`
+{cat:'uw-disease', q:'心脏病可以投保吗？', risk:'no', a:`
   <p>不可以。定期寿险的定位就是核保严格，确诊心脏类型/心血管类型疾病很难承保。</p>
   <div class="note">注意：确诊心脏类疾病一般要看心脏专科；有一些血液指标也能反映心脏风险，但不能作为确诊依据，仅仅血液指标偏高，通常是加费处理。<br><br>
   比如血液指标 CRP，其升高与动脉粥样硬化和冠心病风险增加相关，可作为预测心血管事件的参考指标之一。当 CRP 浓度超过 3 毫克/升时，心血管风险会明显升高。</div>
 `},
-{cat:'uw', q:'有结节可以投保吗？', risk:'ok', a:`
+{cat:'uw-disease', q:'有结节可以投保吗？', risk:'ok', a:`
   <p>一般结节长期稳定，大多数可以投保定寿；如果是投保消费型重疾，有结节的器官会被除外。</p>
   <ul>
     <li>乳腺/甲状腺结节：小于等于三级</li>
@@ -343,16 +415,16 @@ const DATA = [
   </ul>
   <p>需要报告证明结节长期稳定，一般要求两次报告，前后间隔 6 个月且结节没有明显变化。报告需认证翻译成英文。</p>
 `},
-{cat:'uw', q:'吸烟会比不吸烟贵吗？', risk:'warn', a:`
+{cat:'uw-disease', q:'吸烟会比不吸烟贵吗？', risk:'warn', a:`
   <p>会，一般贵 20%。需如实申报吸烟与否，不管一年抽多少根，只要吸烟就按吸烟费率计算，<b>包括电子烟</b>。</p>
   <div class="note">如购买保单后两年客户才开始吸烟，这种情况一般不影响后续保费。</div>
 `},
-{cat:'uw', q:'癌症痊愈后可以投保吗？', risk:'no', a:`
+{cat:'uw-disease', q:'癌症痊愈后可以投保吗？', risk:'no', a:`
   <p>定寿一般要求癌症痊愈超过 <b>10 年</b>。</p>
   <p>案例参考：一位甲状腺乳头状癌（甲状腺癌中最常见、也最好治疗的类型）患者痊愈 7 年，投保定寿时每一家保险公司都被拒绝了。</p>
   <p>IUL 一般癌症痊愈超过 5 年有希望承保。</p>
 `},
-{cat:'uw', q:'肿瘤标记物类型核保', risk:'warn', a:`
+{cat:'uw-disease', q:'肿瘤标记物类型核保', risk:'warn', a:`
   <p>如果客户肿瘤标记物高于正常值，定期寿险中一般直接拒保；除非客户能提供后续报告证明肿瘤标记物已回归正常值。</p>
   <div class="note">
   <b>医学逻辑：</b>肿瘤标记物高不代表一定患癌，该指标本身并不十分准确。<br>
@@ -364,7 +436,7 @@ const DATA = [
     <li>情况2：长期标记物偏高，提供间隔一年的 2-3 次报告，确认无癌症，IUL 会视情况承保，可能加费也可能标准体。</li>
   </ul>
 `},
-{cat:'uw', q:'还有哪些小众实操核保经验？', risk:'warn', a:`
+{cat:'uw-disease', q:'还有哪些小众实操核保经验？', risk:'warn', a:`
   <ul>
     <li>中度呼吸暂停症 —— 加费 50%</li>
     <li>CRP 偏高 + 高血脂 —— 加费 50%（CRP 升高与动脉粥样硬化、冠心病风险相关；当 CRP 浓度超过 3 毫克/升时，心血管风险明显升高）</li>
@@ -373,7 +445,7 @@ const DATA = [
 `},
 
 // ========== 投保类 ==========
-{cat:'apply', q:'投/被保人的关系只接受哪几种？', risk:'warn', a:`
+{cat:'apply-eligibility', q:'投/被保人的关系只接受哪几种？', risk:'warn', a:`
   <ul>
     <li>自己给自己投保</li>
     <li>给配偶投保</li>
@@ -381,11 +453,11 @@ const DATA = [
     <li>公司给 key person（关键人）投保，需文件证明其 key person 身份，比如持股证明 —— 一般 IUL 较多，定期寿险几乎没有这类案例</li>
   </ul>
 `},
-{cat:'apply', q:'客户不会英文，需要 trusted individual 陪同，可以是什么类型的人？', risk:'warn', a:`
+{cat:'apply-eligibility', q:'客户不会英文，需要 trusted individual 陪同，可以是什么类型的人？', risk:'warn', a:`
   <p>如果客户不懂英文，必须有一位客户本人指定的、可信赖的人员陪同，即 "trusted individual"（信任个体）。</p>
   <div class="note">需要注意：这位陪同人员不能与客户存在利益关联，例如转介绍人、合作伙伴等均不符合条件，因为可能引发利益冲突，不能担任客户的 trusted individual。</div>
 `},
-{cat:'apply', q:'定期寿险免体检额是多少？', risk:'ok', a:`
+{cat:'apply-limits', q:'定期寿险免体检额是多少？', risk:'ok', a:`
   <p><b>非新加坡居民（无新加坡长期签证）</b></p>
   <table>
     <tr><th>年龄</th><th>免体检额</th></tr>
@@ -403,25 +475,25 @@ const DATA = [
     <tr><td>56 岁 – 60 岁</td><td>约 50 万新币，约合 35 万美金</td></tr>
   </table>
 `},
-{cat:'apply', q:'定期寿险最多可以保到多少岁？', risk:'ok', a:`
+{cat:'apply-term', q:'定期寿险最多可以保到多少岁？', risk:'ok', a:`
   <p>新 JP 人寿定期寿险保障期限最长可至 <b>99 岁</b>。若被保险人在 99 岁前未发生身故，保险公司不会退还保费。</p>
 `},
-{cat:'apply', q:'最晚多少岁投保？', risk:'warn', a:`
+{cat:'apply-term', q:'最晚多少岁投保？', risk:'warn', a:`
   <p>理论上最晚可至 <b>74 周岁</b>，但实际核保要求非常严格。</p>
   <div class="note">对于 60 岁以上且保额超过免体检额的投保申请，成功承保的案例极少。</div>
 `},
-{cat:'apply', q:'可以选择的保障年限是多少？', risk:'ok', a:`
+{cat:'apply-term', q:'可以选择的保障年限是多少？', risk:'ok', a:`
   <p>到 85 岁之前可以灵活选择保障期；超过 85 岁，只有「保到 99 岁」一个选项。</p>
 `},
-{cat:'apply', q:'保障至 99 岁未发生死亡，会退保费吗？', risk:'no', a:`
+{cat:'apply-term', q:'保障至 99 岁未发生死亡，会退保费吗？', risk:'no', a:`
   <p>不退。但新 JP 人寿这款产品如果选择保至 99 岁 + Limited Pay（有限缴费期 5 年 / 10 年 / 到 65 岁 / 到 75 岁），就会有现金价值，可以退现金价值。</p>
 `},
-{cat:'apply', q:'Regular Pay 和 Limited Pay 区别是什么？', risk:'ok', a:`
-  <p><b>Regular Pay：</b>保障期和缴费期相同，例如保障期限 40 年、缴费期也是 40 年。这种形式通常是消费型的，没有任何现金价值，遵循「交一年管一年」的原则。</p>
-  <p><b>Limited Pay：</b>缴费期比保障期短，例如保障至 99 岁但缴费期仅 10 年。由于缴费期短于保障期，这种形式通常具有现金价值。</p>
+{cat:'apply-term', q:'Regular Pay 和 Limited Pay 区别是什么？', risk:'ok', a:`
+  <p><b>Regular Pay：</b>保障期和缴费期相同，例如保障期限 40 年、缴费期也是 40 年。这种形式通常是消费型的，没有任何现金价值，遵循「交一年管一年」的原则。保到 85 岁之前灵活选择保障期，超过 85 岁只有保到 99 岁一个选项，保额 50 万以上每年均可享受保费 7 折折扣（4.21 起需附加全残才可享受折扣）。</p>
+  <p><b>Limited Pay：</b>缴费期比保障期短，例如保障至 99 岁但缴费期仅 10 年。由于缴费期短于保障期，这种形式通常具有现金价值。目前缴费期只有 5 Pay、10 Pay、缴纳至 65 ANB 和 75 ANB 选项，保障期全都只能选择保障到 99 岁。没有保费 7 折折扣。</p>
 `},
-{cat:'apply', q:'定寿是不是均衡费率，保障期内保费不会增加？', risk:'ok', a:`<p>对，保障期内保费均衡，不会增加。</p>`},
-{cat:'apply', q:'如果叠加了重疾或全残，怎么赔付？等待期是多久？', risk:'ok', a:`
+{cat:'apply-term', q:'定寿是不是均衡费率，保障期内保费不会增加？', risk:'ok', a:`<p>对，保障期内保费均衡，不会增加。</p>`},
+{cat:'apply-benefit', q:'如果叠加了重疾或全残，怎么赔付？等待期是多久？', risk:'ok', a:`
   <p>人寿/全残部分没有等待期；如果附加重疾，重疾的等待期是 <b>90 天</b>。</p>
   <p><b>叠加全残保障：</b></p>
   <ul>
@@ -436,7 +508,7 @@ const DATA = [
   </ul>
   <div class="note">重疾赔付后客户仍生存，需注意剩余保额的相应调整（如全残/身故保额相应减少）；全残赔付优先于身故赔付，即全残发生后合同终止。</div>
 `},
-{cat:'apply', q:'重大疾病都包括哪些？', risk:'ok', a:`
+{cat:'apply-benefit', q:'重大疾病都包括哪些？', risk:'ok', a:`
   <p>新加坡人寿保险协会（LIA）受 MAS 监管，制定了 37 种重大疾病（Critical Illness）的标准化定义，涵盖主要癌症、心脑血管疾病、神经系统疾病等：</p>
   <ul>
     <li>严重癌症（Major Cancer）</li>
@@ -479,21 +551,21 @@ const DATA = [
   </ul>
   <div class="note">此处 Critical Illness 指重大疾病的严重状态，不包含轻症状态（Early Critical Illness）。以严重癌症为例：不包括原位癌，甲状腺癌/前列腺癌等需超过 T1N0M0，更接近疾病危重状态。</div>
 `},
-{cat:'apply', q:'全残（TPD）具体如何定义？', risk:'ok', a:`
+{cat:'apply-benefit', q:'全残（TPD）具体如何定义？', risk:'ok', a:`
   <p>新加坡定期寿险中的全残定义主要包含两种标准：</p>
   <p><b>1. 躯体残疾标准：</b>双目及四肢（手腕及以下、脚踝及以下）这六个部位中，有两个或以上部位受损，导致永久性丧失工作能力，如双下肢瘫痪等。</p>
   <p><b>2. 日常生活能力标准：</b>无法独立完成 6 项基本日常生活活动中的至少 3 项，包括：穿衣、移动（如从床上到椅子）、行动（行走）、如厕、进食、洗澡。</p>
 `},
-{cat:'apply', q:'可以买超过免体检额的保额吗？', risk:'warn', a:`
+{cat:'apply-limits', q:'可以买超过免体检额的保额吗？', risk:'warn', a:`
   <p>可以，但需在新加坡完成体检。若保额超过免体检额，客户需在新加坡停留超过一周（通常从提交申请到收到体检通知函后，需预约诊所并完成体检）。</p>
 `},
-{cat:'apply', q:'有没有什么免责条款？', risk:'no', a:`
+{cat:'apply-benefit', q:'有没有什么免责条款？', risk:'no', a:`
   <ul>
     <li>一年内自杀不保</li>
     <li>如隐瞒身体状况，保险公司有权拒赔</li>
   </ul>
 `},
-{cat:'apply', q:'一个人最多可以买多少保额？', risk:'ok', a:`
+{cat:'apply-limits', q:'一个人最多可以买多少保额？', risk:'ok', a:`
   <p><b>寿险 & 全残保额限制（按年收入倍数）：</b></p>
   <ul>
     <li>≤ 40 岁：最高为年收入的 30 倍</li>
@@ -509,14 +581,14 @@ const DATA = [
     <li>＞ 60 岁：最高为年收入的 5 倍</li>
   </ul>
 `},
-{cat:'apply', q:'可以给孩子买定期寿险吗？', risk:'ok', a:`
+{cat:'apply-eligibility', q:'可以给孩子买定期寿险吗？', risk:'ok', a:`
   <p>可以。无需财务证明，最多 75 万新币（约合 50 万美金）；超过则最高可投保额为以下二者中的较高值：</p>
   <ul>
     <li>相当于父母现有保单的保额</li>
     <li>根据收入计算的父母符合条件保额的 50%</li>
   </ul>
 `},
-{cat:'apply', q:'没有收入的人最多可以买多少定期寿险？', risk:'warn', a:`
+{cat:'apply-eligibility', q:'没有收入的人最多可以买多少定期寿险？', risk:'warn', a:`
   <p>无需财务证明，最多 75 万新币（约合 50 万美金）；超过需提供证明材料，身故赔偿保额上限为以下三项中的最高值：</p>
   <ul>
     <li>相当于在职配偶现行有效保单的保额</li>
@@ -524,16 +596,16 @@ const DATA = [
     <li>个人净资产的 30%</li>
   </ul>
 `},
-{cat:'apply', q:'单张保费最低要求是多少？', risk:'ok', a:`
+{cat:'apply-limits', q:'单张保费最低要求是多少？', risk:'ok', a:`
   <p>单张 1000 美金以上（或等额新币，约 1400 新币）。保费可以通过延长缴费期、添加重疾/全残来增加；远程签单不可以体检，总保额通常控制在免体检额度内。</p>
 `},
-{cat:'apply', q:'可以接受的投保地区有哪些？', risk:'warn', a:`
+{cat:'apply-eligibility', q:'可以接受的投保地区有哪些？', risk:'warn', a:`
   <div class="note">注意：可以接受投保的地区不等同于可以远程签单的地区。以下是入境新加坡即可投保的地区；远程签单地区请参考「远程签单类」部分。费率从低到高：Residency 1 &lt; Residency 2 &lt; Residency 3，不在清单上的地区均不可投保。</div>
   <p><b>Residency 1（费率最优）：</b>新加坡、马来西亚、印度尼西亚（主要城市）、中国（主要城市）、文莱、澳大利亚、英国、韩国、台湾地区、安道尔、奥地利、巴哈马、比利时、英属维尔京群岛、加拿大、开曼群岛、智利、中国、捷克共和国、丹麦、厄瓜多尔、芬兰、法国、德国、希腊、冰岛、爱尔兰、意大利、约旦、科威特、列支敦士登、卢森堡、马耳他、摩纳哥、荷兰、荷属安的列斯（现已解体）、新西兰、挪威、阿曼、葡萄牙、卡塔尔、圣马力诺、沙特阿拉伯、斯洛伐克、西班牙、圣基茨和尼维斯、瑞典、瑞士、泰国、特克斯和凯科斯群岛、阿联酋、美国、梵蒂冈城国</p>
   <p><b>Residency 2：</b>印度尼西亚（非主要城市）、越南（新加坡籍）、印度（主要城市）、菲律宾、泰国、捷克共和国、巴林、科威特、南非（非主要城市）、牙买加、蒙特塞拉特、波兰、斯洛伐克、沙特阿拉伯、南非（主要城市）</p>
   <p><b>Residency 3：</b>西萨摩亚、越南（非新加坡籍）、佛得角群岛、埃及、萨尔瓦多、危地马拉、洪都拉斯、斯里兰卡、斯里兰卡（科伦坡）</p>
 `},
-{cat:'apply', q:'需不需要申报在中国大陆和香港的寿险/重大疾病保额？', risk:'warn', a:`
+{cat:'apply-limits', q:'需不需要申报在中国大陆和香港的寿险/重大疾病保额？', risk:'warn', a:`
   <p>在新 JP 人寿保险公司申请的寿险额度没有超过 140 万美金是不需要体检的，但一个人的总保额需要符合财务核保逻辑。</p>
   <ul>
     <li>新加坡的寿险总保额超过 300 万美金，通常要填写 financial questionnaire（财务问卷）</li>
@@ -544,8 +616,8 @@ const DATA = [
 `},
 
 // ========== 远程签单类 ==========
-{cat:'remote', q:'免飞（远程签单）地区有哪些？', risk:'ok', a:`
-  <p>可以远程签单的客户仅限：</p>
+{cat:'remote-region', q:'免飞（远程签单）地区有哪些？', risk:'ok', a:`
+  <p>可以远程签单的客户仅限居住于：</p>
   <ul>
     <li>中国主要城市（不含新疆、西藏）</li>
     <li>中国香港</li>
@@ -554,23 +626,32 @@ const DATA = [
     <li>印尼主要城市</li>
   </ul>
 `},
-{cat:'remote', q:'免飞入新加坡需要满足什么财务要求？', risk:'warn', a:`
+{cat:'remote-finance', q:'免飞入新加坡需要满足什么财务要求？', risk:'warn', a:`
   <p>满足以下之一即可：</p>
   <ul>
     <li>年收入：12 万新币（可以是公司提供的收入证明）</li>
     <li>或流动总资产：大于 20 万新币（可以是银行月结单、股票账户余额、支付宝余额）</li>
   </ul>
 `},
-{cat:'remote', q:'免飞入新加坡的财务要求仅仅针对保单持有人吗？', risk:'ok', a:`
+{cat:'remote-finance', q:'免飞入新加坡的财务要求仅仅针对保单持有人吗？', risk:'ok', a:`
   <p>对，被保人没有财务证明要求。</p>
   <p>例如：若太太不符合财务要求，可由符合要求的先生作为投保人，太太作为被保人进行投保。需要注意，若被保人年龄超过 18 岁，需在远程签单时上线完成电子签名。</p>
 `},
+{cat:'remote-client', q:'什么样的客户不接受远程签单？', risk:'no', a:`
+  <p>如果是 <b>Selected Client</b>，不可以做远程签单。满足以下两项内容即属于 Selected Client：</p>
+  <ul>
+    <li>年纪 ≥ 61 岁</li>
+    <li>不善英文</li>
+    <li>大专学历以下</li>
+  </ul>
+  <div class="note">以上三项中满足两项，即判定为 Selected Client，需入境新加坡当面签单。</div>
+`},
 
 // ========== 付款类型问题 ==========
-{cat:'pay', q:'可以用第三方账户付款吗？', risk:'warn', a:`
+{cat:'pay-account', q:'可以用第三方账户付款吗？', risk:'warn', a:`
   <p>付款通常需要本人账户。如需用到其他人的账户付款，通常该账户必须是<b>直系亲属</b>的，且需要在投保时就申报使用直系亲属账户付款。</p>
 `},
-{cat:'pay', q:'中国客户常用的优选银行有哪些？', risk:'ok', a:`
+{cat:'pay-account', q:'中国客户常用的优选银行有哪些？', risk:'ok', a:`
   <div class="note">以下银行通常内地分行不行，需要是港澳分行；部分特别标注仅新加坡分行。建议使用新加坡系银行。</div>
   <ul>
     <li>DBS Bank Ltd 星展银行</li>
@@ -588,10 +669,10 @@ const DATA = [
     <li>Standard Chartered Bank (Singapore) 渣打银行（仅限新加坡支行）</li>
   </ul>
 `},
-{cat:'pay', q:'付款长期需要用港澳账户/境外账户吗？', risk:'warn', a:`
+{cat:'pay-account', q:'付款长期需要用港澳账户/境外账户吗？', risk:'warn', a:`
   <p>内地账户通常不能直接付款境外保单，客户需要长期拥有港澳账户来缴费。</p>
 `},
-{cat:'pay', q:'如何转账缴纳保费？', risk:'ok', a:`
+{cat:'pay-method', q:'如何转账缴纳保费？', risk:'ok', a:`
   <p>转账时备注保单号，记得选择转账手续费扣费在自己账户；如果银行 app 不能选择手续费扣在自己账户，建议多转 25 美金/30 新币，预留转账费用。</p>
   <div class="note">如果新 JP 人寿保险公司收不到足额保费，会导致保单不能生效/失效。</div>
   <p><b>收款人：</b>Singapore Life Ltd.<br>
@@ -606,32 +687,29 @@ const DATA = [
   SWIFT 代码：DBSSSGSGXXX<br>
   收款账号：003-958595-0</p>
 `},
-{cat:'pay', q:'可以用信用卡付保费吗？', risk:'warn', a:`
+{cat:'pay-method', q:'可以用信用卡付保费吗？', risk:'warn', a:`
   <p>可以，境外/港澳信用卡可以，但<b>仅限第一年保费</b>。</p>
 `},
 
 // ========== 受益人 ==========
-{cat:'benef', q:'哪些人可以是受益人？', risk:'ok', a:`
+{cat:'benef-rules', q:'哪些人可以是受益人？', risk:'ok', a:`
   <p>无限制关系：受益人可以是与被保险人无婚姻或血缘关系的任何人。</p>
 `},
-{cat:'benef', q:'受益人变更流程是怎样的？', risk:'ok', a:`
+{cat:'benef-rules', q:'受益人变更流程是怎样的？', risk:'ok', a:`
   <p>灵活调整：受益人可随时更改，只需提交一份新的受益人表格，覆盖原信息即可生效。</p>
 `},
-{cat:'benef', q:'受益人未满 18 岁，发生理赔可以接受理赔款吗？', risk:'warn', a:`
+{cat:'benef-rules', q:'受益人未满 18 岁，发生理赔可以接受理赔款吗？', risk:'warn', a:`
   <p>若受益人未满 18 岁，理赔款将支付至其监护人账户。</p>
 `},
-{cat:'benef', q:'可以设置多个受益人吗？', risk:'ok', a:`
+{cat:'benef-rules', q:'可以设置多个受益人吗？', risk:'ok', a:`
   <p>可以指定多个受益人，总分配比例需为 100%（例如：A 占 50%、B 占 30%、C 占 20%）。</p>
-`},
-{cat:'benef', q:'受益人表格如何填写？', risk:'ok', a:`
-  <p>请参照公司制作的受益人表格填写指南，填写完成后用投保时留存的邮箱发送到 <b>cs_life@singlife.com</b>，签名尽量与投保时签署的签名保持一致。</p>
 `},
 
 // ========== 赔付类 ==========
-{cat:'claim', q:'受益人一定要有海外账户吗？', risk:'warn', a:`
+{cat:'claim-account', q:'受益人一定要有海外账户吗？', risk:'warn', a:`
   <p>一般大额赔付到内地账户相对困难，需要受益人拥有港澳/海外账户。</p>
 `},
-{cat:'claim', q:'理赔需要哪些文件？', risk:'ok', a:`
+{cat:'claim-process', q:'理赔需要哪些文件？', risk:'ok', a:`
   <p><b>寿险理赔：</b></p>
   <ul>
     <li>受益人填写的理赔申请表（claim form）</li>
@@ -650,12 +728,12 @@ const DATA = [
   </ul>
   <div class="note">非英文文件需要翻译。</div>
 `},
-{cat:'claim', q:'理赔需要本人去新加坡吗？', risk:'ok', a:`
+{cat:'claim-process', q:'理赔需要本人去新加坡吗？', risk:'ok', a:`
   <p>不需要，远程提交文件电子版即可。</p>
 `},
 
 // ========== 计划书/报价 ==========
-{cat:'quote', q:'计划书/报价如何申请？', risk:'ok', a:`
+{cat:'quote-template', q:'计划书/报价如何申请？', risk:'ok', a:`
   <p><b>申请方式——邮件渠道</b></p>
   <p>发送地址：<b>quote@pfplegacy.com</b></p>
 
@@ -683,21 +761,26 @@ const DATA = [
     <li>投保人年龄/性别</li>
     <li>受保人年龄/性别</li>
     <li>是否吸烟</li>
-    <li>居住地区</li>
   </ul>
 
   <p>计划书语言：中文或英文（目前大 DF、宏 L、全 M、永 M 均提供中文计划书）</p>
   <div class="note">同事会尽快回复您。</div>
 `},
+{cat:'quote-discount', q:'定寿的 7 折是每年都有吗？', risk:'ok', a:`
+  <p><b>定期缴费（Regular Pay）：</b>缴费期 = 保障期。保到 85 岁之前灵活选择保障期，超过 85 岁只有保到 99 岁一个选项，保额 50 万以上每年均可享受保费 7 折折扣（4.21 起需附加全残附加险才可享受折扣）。</p>
+`},
 ];
 
 // assign stable ids
 DATA.forEach((d,i)=>d.id=i);
+document.getElementById('heroMeta').textContent = `共 ${DATA.length} 条问答 · 点击下方分类快速筛选`;
 
-const catMap = Object.fromEntries(CATS.map(c=>[c.id,c.name]));
+const catMap = Object.fromEntries(CATS.map(c=>[c.id,c]));       // subId -> {id,group,name}
+const groupMap = Object.fromEntries(GROUPS.map(g=>[g.id,g]));   // groupId -> {id,name}
 const riskLabel = {ok:'较易承保', warn:'视情况而定', no:'较难/不可承保'};
 
-let activeCat = 'all';
+let activeGroup = 'all';
+let activeSub = 'all';
 let openId = null;
 
 // ---------- search scoring (character-bigram similarity, CJK-friendly) ----------
@@ -736,18 +819,47 @@ function highlight(text, query){
   }catch(e){ return text; }
 }
 
+function groupCount(gid){
+  return DATA.filter(d=> catMap[d.cat].group===gid).length;
+}
+function subCount(sid){
+  return DATA.filter(d=> d.cat===sid).length;
+}
+
 function renderChips(){
   const chipsEl = document.getElementById('chips');
-  const allCount = DATA.length;
-  let html = `<div class="chip ${activeCat==='all'?'active':''}" data-cat="all">全部 <span class="count">${allCount}</span></div>`;
-  CATS.forEach(c=>{
-    const n = DATA.filter(d=>d.cat===c.id).length;
-    html += `<div class="chip ${activeCat===c.id?'active':''}" data-cat="${c.id}">${c.name} <span class="count">${n}</span></div>`;
+  const subChipsEl = document.getElementById('chipsSub');
+
+  // 一级分组标签
+  let html = `<div class="chip ${activeGroup==='all'?'active':''}" data-group="all">全部 <span class="count">${DATA.length}</span></div>`;
+  GROUPS.forEach(g=>{
+    html += `<div class="chip ${activeGroup===g.id?'active':''}" data-group="${g.id}">${g.name} <span class="count">${groupCount(g.id)}</span></div>`;
   });
   chipsEl.innerHTML = html;
   chipsEl.querySelectorAll('.chip').forEach(el=>{
     el.addEventListener('click', ()=>{
-      activeCat = el.dataset.cat;
+      activeGroup = el.dataset.group;
+      activeSub = 'all';
+      render();
+    });
+  });
+
+  // 二级子目录标签：仅当选中某一分组，且该分组下子目录数 > 1 时展示
+  const subs = activeGroup==='all' ? [] : CATS.filter(c=>c.group===activeGroup);
+  if(activeGroup!=='all' && subs.length>1){
+    let subHtml = `<div class="chip-sub ${activeSub==='all'?'active':''}" data-sub="all">全部 <span class="count">${groupCount(activeGroup)}</span></div>`;
+    subs.forEach(s=>{
+      subHtml += `<div class="chip-sub ${activeSub===s.id?'active':''}" data-sub="${s.id}">${s.name} <span class="count">${subCount(s.id)}</span></div>`;
+    });
+    subChipsEl.innerHTML = subHtml;
+    subChipsEl.style.display = 'flex';
+  } else {
+    subChipsEl.innerHTML = '';
+    subChipsEl.style.display = 'none';
+  }
+  subChipsEl.querySelectorAll('.chip-sub').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      activeSub = el.dataset.sub;
       render();
     });
   });
@@ -756,7 +868,8 @@ function renderChips(){
 function getFiltered(){
   const query = document.getElementById('searchInput').value.trim();
   let list = DATA.slice();
-  if(activeCat !== 'all') list = list.filter(d=>d.cat===activeCat);
+  if(activeGroup !== 'all') list = list.filter(d=>catMap[d.cat].group===activeGroup);
+  if(activeSub !== 'all') list = list.filter(d=>d.cat===activeSub);
 
   if(query){
     list = list
@@ -794,7 +907,7 @@ function render(){
         <div class="card-head" data-toggle="${item.id}">
           <div class="idx-badge">${String(i+1).padStart(2,'0')}</div>
           <div class="head-text">
-            <div class="cat-label">${catMap[item.cat]}</div>
+            <div class="cat-label">${groupMap[catMap[item.cat].group].name} · ${catMap[item.cat].name}</div>
             <div class="q-text">${qHtml}</div>
           </div>
           <div class="risk-dot risk-${item.risk}" title="${riskLabel[item.risk]}"></div>
