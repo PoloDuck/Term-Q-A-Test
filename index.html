@@ -446,6 +446,7 @@
       <button class="quote-btn secondary" id="applyQuoteRequest" type="button">去申请计划书</button>
     </div>
     <div class="quote-result" id="quoteResult"></div>
+    <div class="quote-disclaimer"><b>投保门槛：</b>定期寿险单张保单年保费最低为 USD 1,000；若测算结果低于该金额，需调整保额、保障责任或保障年期后再申请计划书。</div>
     <div class="quote-disclaimer"><b>重要提示：</b>本报价器输出的所有测算结果仅为初步价格区间参考，不构成任何定价承诺。受保险公司定价系统动态调整影响，测算结果无法实现绝对精确，仅可用于大致范围评估。鉴于产品可选配置与责任方案较多，保障及缴费年期跨度较大，若需获取较为精准的定价数据，请您邮件申请计划书。
       <div class="quote-version">数据版本：v251001 · 报价为历史折扣后价格 · 最终价格及承保条件以保险公司正式计划书为准</div>
     </div>
@@ -1116,8 +1117,10 @@ function showQuote(){
     quoteResult.innerHTML='<div class="quote-error">当前组合没有对应的历史报价，请调整保障期限或邮件申请正式计划书。</div><div class="result-detail">部分年龄与保障期限组合不受当前产品规则支持，网页不会自行插值或推算。</div>';
     return;
   }
-  const total=premium*Number(qTerm.value);
-  quoteResult.innerHTML=`<div class="result-detail">历史参考年保费</div><div class="result-premium">USD ${money(premium)} <small>/ 年</small></div><div class="result-detail">${qAge.value}岁 · ${qGender.value} · 不吸烟 · 寿险保额 USD ${Number(qSum.value).toLocaleString('en-US')} · 保障 ${qTerm.value} 年 · 全残：${qTPD.value} · 重疾：${Number(qCI.value).toLocaleString('en-US')} 美元<br>按当前保障年期简单累计约 USD ${money(total)}（未考虑保险公司后续调价、保单变更及其他因素）。</div>`;
+  const thresholdNote = premium < 1000
+    ? '<div class="quote-error" style="margin-top:12px;">当前参考年保费低于定寿单张保单 USD 1,000 的最低投保门槛，请调整方案后申请正式计划书。</div>'
+    : '<div class="result-detail" style="margin-top:10px;">该参考年保费已达到定寿单张保单 USD 1,000 的最低投保门槛。</div>';
+  quoteResult.innerHTML=`<div class="result-detail">历史参考年保费</div><div class="result-premium">USD ${money(premium)} <small>/ 年</small></div><div class="result-detail">${qAge.value}岁 · ${qGender.value} · 不吸烟 · 寿险保额 USD ${Number(qSum.value).toLocaleString('en-US')} · 保障 ${qTerm.value} 年 · 全残：${qTPD.value} · 重疾：${Number(qCI.value).toLocaleString('en-US')} 美元</div>${thresholdNote}`;
 }
 document.getElementById('calculateQuote').addEventListener('click',showQuote);
 [qAge,qGender,qSum,qTerm,qCI,qTPD].forEach(el=>el.addEventListener('change',()=>{if(quoteResult.classList.contains('show'))showQuote();}));
