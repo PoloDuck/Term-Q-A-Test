@@ -262,7 +262,7 @@
     overflow:hidden;
     transition:max-height .28s ease;
   }
-  .card.open .card-body{max-height:2400px;}
+  .card.open .card-body{max-height:none;}
   .a-inner{
     padding:0 18px 20px 60px;
     font-size:14.5px;
@@ -382,6 +382,134 @@
   .quote-version{margin-top:8px;color:rgba(91,66,26,.7);font-size:11.5px;}
   @media(max-width:620px){.quote-form{grid-template-columns:1fr}.tool-tabs{padding:0 16px;gap:8px}.tool-tabs::before{inset:-7px 10px}.tool-tab{flex:1;padding:10px 8px;font-size:13px}.quote-section{padding:0 16px}.quote-form{padding:18px 16px 8px}.quote-actions{padding:10px 16px 18px}.quote-result,.quote-disclaimer{margin-left:16px;margin-right:16px}}
 
+
+
+  /* ---------- Platinum metal theme ---------- */
+  :root{
+    --navy-900:#24262a;
+    --navy-800:#34373c;
+    --navy-700:#565a61;
+    --ivory:#f5f5f3;
+    --ivory-dim:#e9e9e6;
+    --brass:#a78647;
+    --brass-bright:#c8ab68;
+    --teal:#646970;
+    --line:rgba(48,51,56,.14);
+    --shadow:0 18px 50px rgba(34,36,40,.10),0 2px 10px rgba(34,36,40,.05);
+  }
+  body{
+    background:
+      radial-gradient(900px 460px at 10% -5%,rgba(255,255,255,.98),transparent 62%),
+      radial-gradient(900px 520px at 100% 0,rgba(211,213,216,.46),transparent 60%),
+      linear-gradient(135deg,#f9f9f8 0%,#ececea 48%,#f8f8f7 100%);
+    color:#282a2e;
+  }
+  header.hero{
+    background:
+      linear-gradient(118deg,rgba(255,255,255,.98) 0%,rgba(228,229,230,.97) 40%,rgba(250,250,249,.98) 72%,rgba(207,209,212,.95) 100%);
+    color:#25272b;
+    border-bottom:1px solid rgba(91,94,99,.18);
+    box-shadow:0 12px 36px rgba(36,38,42,.08);
+  }
+  header.hero::before{
+    background-image:
+      linear-gradient(115deg,transparent 0 43%,rgba(255,255,255,.72) 47%,transparent 52%),
+      repeating-linear-gradient(90deg,rgba(44,47,52,.025) 0,rgba(44,47,52,.025) 1px,transparent 1px,transparent 72px);
+  }
+  header.hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(167,134,71,.08),transparent);
+    mix-blend-mode:multiply;
+  }
+  .hero-inner{z-index:1;}
+  .eyebrow{color:#806528;border-color:rgba(167,134,71,.42);background:rgba(255,255,255,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.9);}
+  .eyebrow .dot{background:linear-gradient(145deg,#d5bd82,#8a6c30);box-shadow:0 0 0 3px rgba(167,134,71,.10);}
+  h1.title{color:#23252a;text-shadow:0 1px 0 #fff;}
+  h1.title .sub,.hero-meta{color:rgba(38,40,45,.60);}
+  #searchInput{background:rgba(255,255,255,.72);border-color:rgba(79,82,88,.22);color:#25272b;box-shadow:inset 0 1px 0 #fff,0 10px 28px rgba(45,48,52,.07);}
+  #searchInput::placeholder{color:rgba(40,42,47,.42);}
+  #searchInput:focus{background:#fff;border-color:#aa8b4d;box-shadow:0 0 0 3px rgba(167,134,71,.12),0 12px 30px rgba(45,48,52,.09);}
+  .clear-btn{color:rgba(40,42,47,.50);}
+  .disclaimer-bar{background:rgba(255,255,255,.56);border-color:rgba(167,134,71,.32);color:rgba(40,42,47,.72);backdrop-filter:blur(8px);}
+  .disclaimer-bar b,.disclaimer-bar .mark{color:#8b6d31;}
+
+  .tool-tabs{background:linear-gradient(145deg,#fff,#e4e5e6);border:1px solid rgba(60,63,68,.16);box-shadow:var(--shadow);}
+  .tool-tab{color:#555960;}
+  .tool-tab.active{background:linear-gradient(145deg,#33363b,#17191d);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 20px rgba(31,33,37,.22);}
+
+  .chips-box,.quote-panel,.card{background:rgba(255,255,255,.88);border-color:rgba(70,73,78,.14);box-shadow:var(--shadow);backdrop-filter:blur(10px);}
+  .chips{padding:16px;gap:10px;}
+  .chip{border-radius:12px;padding:11px 17px;background:linear-gradient(145deg,#fff,#eceeed);color:#44474d;box-shadow:inset 0 1px 0 #fff;}
+  .chip:hover{border-color:#a98a4d;color:#765c28;transform:translateY(-1px);}
+  .chip.active{background:linear-gradient(145deg,#3c3f45,#191b1f);border-color:#26282d;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px rgba(32,34,38,.20);}
+  .chip.active::before{content:"";width:5px;height:18px;border-radius:8px;background:linear-gradient(#d8c38d,#977635);}
+  .chips-sub{background:linear-gradient(180deg,rgba(238,239,239,.74),rgba(255,255,255,.82));border-top:1px solid rgba(70,73,78,.10);padding:13px 16px 16px;}
+  .chip-sub{background:rgba(255,255,255,.80);color:#5b5e64;border-color:rgba(70,73,78,.15);padding:7px 12px;}
+  .chip-sub:hover{border-color:#a98a4d;color:#795f2a;}
+  .chip-sub.active{background:linear-gradient(145deg,#b99a59,#8c6c2d);border-color:#927236;color:#fff;box-shadow:0 5px 13px rgba(126,96,40,.18);}
+
+  .card{border-radius:16px;box-shadow:0 8px 24px rgba(36,38,42,.06);}
+  .card:hover,.card.open{border-color:rgba(167,134,71,.42);box-shadow:0 16px 38px rgba(36,38,42,.10);}
+  .idx-badge{background:linear-gradient(145deg,#51555b,#202226);color:#d8c084;border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.16);}
+  .cat-label{color:#87692f;}
+  .a-inner .note{background:linear-gradient(135deg,#f5f3ed,#e9e5db);border-left-color:#a78647;}
+  .a-inner th{background:linear-gradient(180deg,#f3f3f1,#e6e7e6);}
+
+  .quote-panel-head{background:linear-gradient(135deg,#303338,#17191d);color:#fff;border-bottom:1px solid rgba(200,171,104,.35);}
+  .quote-panel-head p{color:rgba(255,255,255,.68);}
+  .form-field select,.form-field input{background:linear-gradient(145deg,#fff,#f0f0ef);border-color:rgba(67,70,75,.18);color:#2c2e32;}
+  .quote-btn.primary{background:linear-gradient(145deg,#3d4046,#17191d);border-color:#24262a;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px rgba(30,32,36,.18);}
+  .quote-btn.secondary{background:linear-gradient(145deg,#c0a264,#8d6c2f);border-color:#977638;color:#fff;}
+  .quote-result,.quote-disclaimer{background:linear-gradient(135deg,#f9f9f8,#ececea);border-color:rgba(167,134,71,.24);}
+  footer{color:rgba(43,45,50,.45);}
+
+  @media(max-width:620px){
+    .chips{display:grid;grid-template-columns:1fr 1fr;}
+    .chip:first-child{grid-column:1/-1;justify-content:center;}
+    .chip{justify-content:center;white-space:normal;text-align:center;}
+  }
+
+
+  /* ---------- Health declaration & signing workflow ---------- */
+  .health-intro,.process-intro{
+    padding:13px 15px; margin:0 0 14px; border-radius:10px;
+    background:linear-gradient(135deg,rgba(201,169,107,.14),rgba(255,255,255,.72));
+    border:1px solid rgba(171,137,75,.30); color:#443a2b; font-size:13.5px; line-height:1.75;
+  }
+  .health-section{margin:14px 0 18px;}
+  .health-section-title{
+    margin:0 0 8px; padding:8px 11px; border-radius:8px;
+    background:linear-gradient(100deg,#e7e7e4,#fbfbfa); border-left:3px solid #ad8a4f;
+    color:#24272b; font-weight:700; font-size:14px;
+  }
+  .health-question{
+    padding:12px; margin:8px 0; border:1px solid rgba(60,65,72,.14); border-radius:10px;
+    background:rgba(255,255,255,.88);
+  }
+  .health-cn{font-weight:600;color:#20242a;line-height:1.65;white-space:pre-line;}
+  .health-en{margin-top:4px;color:#72767c;font-size:12px;line-height:1.55;white-space:pre-line;}
+  .health-fields{display:grid;grid-template-columns:150px 1fr;gap:8px;margin-top:9px;}
+  .health-fields select,.health-fields input,.health-fields textarea{
+    width:100%;border:1px solid rgba(65,70,78,.22);border-radius:8px;padding:8px 10px;
+    background:#fff;color:#23262b;font:inherit;outline:none;
+  }
+  .health-fields textarea{min-height:56px;resize:vertical;}
+  .health-fields select:focus,.health-fields input:focus,.health-fields textarea:focus{border-color:#ad8a4f;box-shadow:0 0 0 3px rgba(173,138,79,.10);}
+  .flow-steps{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+  .flow-step{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px;border-radius:12px;background:rgba(255,255,255,.90);border:1px solid rgba(56,61,68,.15);}
+  .flow-no{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#33373e,#101216);color:#e6c782;font-weight:700;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);}
+  .flow-title{font-weight:700;color:#22262c;margin:1px 0 5px;}
+  .flow-body{font-size:13.5px;line-height:1.75;color:#41464e;}
+  .flow-body ul{margin:6px 0 0;padding-left:19px;}
+  .material-notice{margin-top:14px;padding:12px 14px;border-radius:10px;background:#f5efe3;border:1px solid rgba(173,138,79,.35);color:#4b3a22;font-weight:600;line-height:1.7;}
+  .email-template{margin-top:9px;padding:11px 12px;border-radius:8px;background:#f4f5f6;border:1px dashed rgba(45,49,56,.28);white-space:pre-line;font-size:13px;color:#353a42;}
+  .country-list{columns:2;column-gap:24px;margin-top:8px;}
+  @media(max-width:600px){
+    .health-fields{grid-template-columns:1fr;}
+    .flow-step{grid-template-columns:38px 1fr;padding:12px;}
+    .country-list{columns:1;}
+  }
+
 </style>
 </head>
 <body class="locked">
@@ -403,10 +531,10 @@
 
 <header class="hero">
   <div class="hero-inner">
-    <span class="eyebrow"><span class="dot"></span>新 JP 人寿 · 定期寿险</span>
+    <span class="eyebrow"><span class="dot"></span>新记</span>
     <h1 class="title display">
       定期寿险 FAQ 智能问答
-      <span class="sub">核保 · 投保 · 远程签单 · 付款 · 受益人 · 理赔 — 输入关键词即可检索</span>
+      <span class="sub">了解产品 · 方案报价 · 投保条件 · 签单办理 — 输入关键词即可检索</span>
     </h1>
     <div class="search-wrap">
       <svg class="search-seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:#d4ac6e" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
@@ -470,57 +598,107 @@
   </div>
 </main>
 
-<footer>内容整理自《定期寿险 FAQ》250520 版 · 仅供内部答疑参考，具体条款以新 JP 人寿保险公司正式文件为准</footer>
+<footer>内容整理自现有定期寿险 FAQ、健康告知及签单流程资料 · 仅供内部答疑参考，具体要求以保险公司正式文件及最新通知为准</footer>
 
 <script>
 const GROUPS = [
-  {id:'uw', name:'核保类'},
-  {id:'apply', name:'投保类'},
-  {id:'remote', name:'远程签单类'},
-  {id:'pay', name:'付款类'},
-  {id:'benef', name:'受益人'},
-  {id:'claim', name:'赔付类'},
-  {id:'quote', name:'计划书/报价'},
+  {id:'product', name:'了解产品'},
+  {id:'quote', name:'方案报价'},
+  {id:'condition', name:'投保条件'},
+  {id:'signing', name:'签单办理'},
 ];
 
-// 子目录：每条问答归入更细的子分类，子分类归属于上面的一级分组(group)
+// 二级目录仅重组现有 FAQ，不新增原资料中没有的规则或内容
 const CATS = [
-  {id:'uw-process', group:'uw', name:'核保流程与规则'},
-  {id:'uw-disease', group:'uw', name:'疾病与体况核保'},
+  {id:'product-term', group:'product', name:'保障期限与缴费方式'},
+  {id:'product-benefit', group:'product', name:'保障责任'},
+  {id:'product-beneficiary', group:'product', name:'受益人'},
+  {id:'product-claim', group:'product', name:'理赔'},
 
-  {id:'apply-eligibility', group:'apply', name:'投保资格与地区'},
-  {id:'apply-limits', group:'apply', name:'保额与限额'},
-  {id:'apply-term', group:'apply', name:'保障期限与缴费方式'},
-  {id:'apply-benefit', group:'apply', name:'保障责任与定义'},
+  {id:'quote-limits', group:'quote', name:'保额与限额'},
+  {id:'quote-plan', group:'quote', name:'方案配置'},
+  {id:'quote-premium', group:'quote', name:'保费与折扣'},
+  {id:'quote-template', group:'quote', name:'计划书'},
 
-  {id:'remote-region', group:'remote', name:'免飞地区范围'},
-  {id:'remote-finance', group:'remote', name:'财务要求'},
-  {id:'remote-client', group:'remote', name:'客户类型限制'},
+  {id:'apply-eligibility', group:'condition', name:'投保资格'},
+  {id:'apply-disclosure', group:'condition', name:'健康告知'},
+  {id:'apply-health', group:'condition', name:'健康核保'},
+  {id:'apply-remote', group:'condition', name:'远程签单条件'},
+  {id:'apply-payment', group:'condition', name:'付款条件'},
 
-  {id:'pay-account', group:'pay', name:'账户要求'},
-  {id:'pay-method', group:'pay', name:'缴费方式'},
-
-  {id:'benef-rules', group:'benef', name:'受益人规则'},
-
-  {id:'claim-account', group:'claim', name:'账户要求'},
-  {id:'claim-process', group:'claim', name:'理赔流程与材料'},
-
-  {id:'quote-template', group:'quote', name:'计划书申请模板'},
-  {id:'quote-discount', group:'quote', name:'保费折扣'},
+  {id:'signing-process', group:'signing', name:'签单流程'},
+  {id:'signing-materials', group:'signing', name:'资料准备'},
+  {id:'signing-session', group:'signing', name:'签署与特别告知'},
 ];
 
 const DATA = [
+{cat:'apply-disclosure', q:'定期寿险健康告知内容', risk:'warn', a:`
+  <div class="health-intro"><b>阅读说明：</b>本页面仅用于提前了解保险公司可能询问的健康告知事项，不在本网页填写或提交。正式投保时，请以保险公司投保系统及正式申请文件中的健康告知为准，并根据实际情况如实、完整申报。</div>
+  <div class="health-section"><div class="health-section-title">寿险及重大疾病保险申报</div><div class="health-question"><div class="health-cn">如您已经有寿险，请申报已有的寿险和购买于哪家保险公司。</div><div class="health-en">If you already have life insurance, please declare the existing life insurance and the insurance company where it was purchased.</div></div><div class="health-question"><div class="health-cn">如您已有重大疾病保险，请申报已有的重大疾病额度和购买的保险公司。</div><div class="health-en">If you already have critical illness insurance, please declare the existing critical illness coverage amount and the insurance company where it was purchased.</div></div></div><div class="health-section"><div class="health-section-title">居住情况（Your Residency）</div><div class="health-question"><div class="health-cn">请告知我们您当前的居住身份状况。在本次申请日期前的过去12个月里，您是否在新加坡居住超过183天？*</div><div class="health-en">Please tell us about your current residency status. In the last 12 months preceding the date of this application, have you been residing in Singapore for more than 183 days?</div></div></div><div class="health-section"><div class="health-section-title">出行详情（Your Travel Details）</div><div class="health-question"><div class="health-cn">在接下来的12个月里，您是否计划在当前居住国以外的地方停留超过90天（不包括学习或休闲）？</div><div class="health-en">In the next 12 months, do you plan to spend more than 90 days outside of your current country of residence (excluding studies or leisure)?</div></div></div><div class="health-section"><div class="health-section-title">职业与休闲/爱好（Your Occupation and Recreation/Hobby）</div><div class="health-question"><div class="health-cn">您是否参与以下任何一项活动，或者未来有计划参与？
+- 潜水
+- 私人飞行
+- 机动车运动
+- 山地或攀岩（不包括人工攀岩墙攀爬）
+- 跳伞或滑翔伞运动
+- 其他极限运动？</div><div class="health-en">Do you take part in any of the following or plan to in future?
+- Scuba diving
+- Private flying
+- Motor sports
+- Mountaineering or rock climbing (excluding artificial wall climbing)
+- Parachuting or paragliding
+- Other extreme sports?</div></div></div><div class="health-section"><div class="health-section-title">饮酒习惯（Drinking Habits）</div><div class="health-question"><div class="health-cn">您是否有饮酒的习惯？</div><div class="health-en">Do you drink alcohol?</div></div><div class="health-question"><div class="health-cn">如果您的回答为“是”，您每周喝多少标准的酒精饮料？</div><div class="health-en">If yes: How many standard alcoholic drinks do you drink per week?</div></div><div class="health-question"><div class="health-cn">啤酒罐数（每330毫升）</div><div class="health-en">Cans of beer (per 330ml):</div></div><div class="health-question"><div class="health-cn">葡萄酒杯数（每125毫升）</div><div class="health-en">Glasses of wine (per 125ml):</div></div><div class="health-question"><div class="health-cn">烈酒杯数（每30毫升）</div><div class="health-en">Glasses of spirit (per 30ml):</div></div><div class="health-question"><div class="health-cn">在过去10年中，您是否曾因酗酒或使用成瘾药物而接受过治疗？</div><div class="health-en">In the last 10 years, have you been treated for alcoholism or used habit-forming drug(s)?</div></div></div><div class="health-section"><div class="health-section-title">曾患疾病（Past Illnesses）</div><div class="health-question"><div class="health-cn">心脏病发作、冠状动脉疾病、心律不齐、心脏瓣膜疾病或任何心脏异常？</div><div class="health-en">Heart attack, coronary artery disease, irregular heartbeat, heart valve disorder or any heart abnormality?</div></div><div class="health-question"><div class="health-cn">中风、癫痫或任何其他神经系统疾病？</div><div class="health-en">Stroke, epilepsy or any other neurological disorder?</div></div><div class="health-question"><div class="health-cn">糖尿病、血糖升高或甲状腺疾病？</div><div class="health-en">Diabetes, raised blood sugar or thyroid disorders?</div></div><div class="health-question"><div class="health-cn">癌症、肿瘤、囊肿或任何类型的增生？</div><div class="health-en">Cancer, tumour, cyst or growth of any kind?</div></div><div class="health-question"><div class="health-cn">抑郁、焦虑或任何其他精神障碍？</div><div class="health-en">Depression, anxiety or any other mental disorder?</div></div><div class="health-question"><div class="health-cn">肾脏或肝脏（例如乙型或丙型肝炎）疾病？</div><div class="health-en">Kidney or liver (e.g., hepatitis B or C) disorder?</div></div><div class="health-question"><div class="health-cn">HIV、艾滋病或性传播疾病？</div><div class="health-en">HIV, AIDS or sexually transmitted disease?</div></div></div><div class="health-section"><div class="health-section-title">近5年患病情况（Illnesses in the Past 5 Years）</div><div class="health-question"><div class="health-cn">高血压？</div><div class="health-en">High blood pressure?</div></div><div class="health-question"><div class="health-cn">哮喘或任何其他呼吸系统疾病？</div><div class="health-en">Asthma or any other respiratory disorder?</div></div><div class="health-question"><div class="health-cn">您尚未完全康复的关节炎、身体残疾或虚弱？</div><div class="health-en">Arthritis, physical disability or weakness for which you have not fully recovered?</div></div><div class="health-question"><div class="health-cn">眼睛或耳朵疾病（近视除外）？</div><div class="health-en">Eye or ear disorder (other than short-sightedness)?</div></div></div><div class="health-section"><div class="health-section-title">其他健康相关情况（Other Health-related Situations）</div><div class="health-question"><div class="health-cn">进行过活组织检查或任何异常的医学检查（如血液/尿液检测、COVID-19 PCR或扫描）？</div><div class="health-en">Had a biopsy or any abnormal medical investigations such as blood/urine tests, COVID-19 PCR or scans?</div></div><div class="health-question"><div class="health-cn">住院超过5天？</div><div class="health-en">Hospitalisation for more than 5 days?</div></div><div class="health-question"><div class="health-cn">连续缺勤工作超过10天？</div><div class="health-en">Absence from work for more than 10 consecutive days?</div></div><div class="health-question"><div class="health-cn">药物治疗或后续咨询持续超过4周？</div><div class="health-en">Medication/follow-ups lasting over 4 weeks?</div></div><div class="health-question"><div class="health-cn">正在等待医学检查结果（如血液/尿液检测或扫描）？</div><div class="health-en">Been waiting for results of medical investigations (e.g., blood/urine tests, scans)?</div></div><div class="health-question"><div class="health-cn">出现症状或考虑就医（除感冒/流感等小病外）？</div><div class="health-en">Had symptoms or considered medical advice (excluding minor illnesses like cold/flu)?</div></div><div class="health-question"><div class="health-cn">日常活动受限或困难？</div><div class="health-en">Experiencing restrictions/difficulties in daily activities?</div></div></div><div class="health-section"><div class="health-section-title">家族病史（Your Family History）</div><div class="health-question"><div class="health-cn">您的亲生父母或兄弟姐妹是否在60岁前被诊断或因以下疾病去世？</div><div class="health-en">Has any of your natural parent or sibling been diagnosed with or died from any of the following before age 60?</div></div><div class="health-question"><div class="health-cn">中风</div><div class="health-en">Stroke</div></div><div class="health-question"><div class="health-cn">糖尿病</div><div class="health-en">Diabetes mellitus</div></div><div class="health-question"><div class="health-cn">多囊肾</div><div class="health-en">Polycystic kidney disease</div></div><div class="health-question"><div class="health-cn">多发性硬化症/肌营养不良症</div><div class="health-en">Multiple sclerosis, muscular dystrophy</div></div><div class="health-question"><div class="health-cn">肠癌/结肠癌/乳腺癌/卵巢癌</div><div class="health-en">Cancers of bowel, colon, breast or ovary</div></div><div class="health-question"><div class="health-cn">阿尔茨海默病/亨廷顿病/帕金森病</div><div class="health-en">Alzheimer&#x27;s, Huntington&#x27;s, Parkinson&#x27;s disease</div></div><div class="health-question"><div class="health-cn">心肌病/冠心病/心脏病发作/缺血性心脏病</div><div class="health-en">Cardiomyopathy, coronary artery disease, heart attack, ischaemic heart disease</div></div><div class="health-question"><div class="health-cn">其他需定期咨询的遗传性疾病</div><div class="health-en">Any other hereditary disease requiring regular consultation?</div></div></div><div class="health-section"><div class="health-section-title">您的基本信息（Your General Details）</div><div class="health-question"><div class="health-cn">是否申请超过2,000,000美元人寿保险或4,000美元残疾收入保险？（若“是”，需提供医生信息）</div><div class="health-en">Are you applying for Life cover &gt;$2,000,000 or Disability Income cover &gt;$4,000? (If yes, provide doctor information.)</div></div><div class="health-question"><div class="health-cn">是否为新加坡居民（公民/永久居民/长期准证持有者）且总保障超限额？</div><div class="health-en">Are you a Singapore resident (citizen/permanent resident/long-term pass holder) with total cover exceeding the applicable limit?</div></div><div class="health-question"><div class="health-cn">您是否做过基因检测？若“否”，除非基因检测结果为阴性且有助于申请，否则无需申报预测性基因检测结果。</div><div class="health-en">Have you undergone genetic testing? If no, there is no need to declare predictive genetic test results unless they are negative and relevant to your application.</div></div></div>
+  <div class="material-notice">预约申请表、收入证明模板及其他签单资料，请联系服务群内同事索取。</div>
+`},
+{cat:'signing-process', q:'新记定寿预约投保全流程', risk:'ok', a:`
+  <div class="process-intro"><b>重要说明：</b>当前流程为人工预约。需要签单时，请先在服务群联系内勤同事，并至少提前三个工作日完整提供所需资料。</div>
+  <div class="flow-steps">
+    <div class="flow-step"><div class="flow-no">01</div><div><div class="flow-title">远程签单：发送反向咨询邮件</div><div class="flow-body">远程签单客户需由本人使用投保邮箱发送反向咨询邮件至 <b>nb@pfplegacy.com</b>，发送后将邮件截图提供给服务群内同事。入境新加坡签单不需要此步骤。<div class="email-template">您好，
+
+我听XXX（顾问/朋友名字/或者代称，比如张总）讲有个定寿产品很好，我很有兴趣，请问方便安排时间跟我讲一下吗？目前我XXXX以后时间比较方便。
+
+Regards
+客户名字</div></div></div></div>
+    <div class="flow-step"><div class="flow-no">02</div><div><div class="flow-title">填写预约申请表</div><div class="flow-body">预约申请表需要使用英文完整填写。投保人与被保险人相同、不同，对应使用不同的预约申请文件。</div></div></div>
+    <div class="flow-step"><div class="flow-no">03</div><div><div class="flow-title">提前三个工作日提交电子资料</div><div class="flow-body">请按照“资料准备”子目录中的清单完整提供电子版资料；如有体况申报，应同步准备对应的英文医疗报告，如果报告为中文，请提供符合要求的认证翻译件，不接受AI翻译文件。</div></div></div>
+    <div class="flow-step"><div class="flow-no">04</div><div><div class="flow-title">完成签单</div><div class="flow-body">远程签单采用视频签约。客户本人需携带护照和身份证原件，签署包括KYC、远程签单同意书、受益人表格及保险公司系统文件等材料，签约时间约一小时。</div></div></div>
+  </div>
+  <div class="material-notice">预约申请表、收入证明模板及其他签单资料，请联系服务群内同事索取。</div>
+`},
+{cat:'signing-materials', q:'签单前需要准备哪些资料？', risk:'warn', a:`
+  <p>所有资料原则上需至少提前三个工作日提供电子版：</p>
+  <ol>
+    <li><b>Passport：</b>未过期的护照首页照片。</li>
+    <li><b>Tax ID：</b>香港身份证或内地身份证。</li>
+    <li><b>Proof of Address with Translation：</b>地址证明及翻译。内地身份可使用身份证地址；港澳身份可使用水电单或银行流水。</li>
+    <li><b>远程签单财务证明：</b>入境新加坡签单不需要。文件给出的参考条件为12万新币年薪公司盖章收入证明，或20万新币流动资产证明，例如银行流水。</li>
+    <li><b>Preferred Bank Proof：</b>远程签单需要；入境新加坡签单不需要。信用卡需提供显示姓名和卡号的账单，不能直接拍摄信用卡；账户证明需显示姓名和账户号码。</li>
+    <li><b>Policy Illustration：</b>拟签约的正式计划书。</li>
+    <li><b>反向预约邮件截图：</b>仅远程签单需要。</li>
+    <li><b>健康及医疗资料：</b>如有体况申报，需提供对应的检查或医疗报告；医疗报告为中文时，需要认证机构翻译，不接受自行翻译。</li>
+    <li><b>新加坡入境证明：</b>仅入境新加坡签单需要。</li>
+  </ol>
+  <div class="note">新币保单使用新加坡本地账户时，可以设置自动扣款；签字需要与银行留存签字一致，否则可能被退回重签。</div>
+  <div class="material-notice">预约申请表、收入证明模板及其他签单资料，请联系服务群内同事索取。</div>
+`},
+{cat:'signing-session', q:'远程视频签约及特别出行告知', risk:'warn', a:`
+  <p><b>远程视频签约：</b>客户本人需携带护照和身份证原件，完成相关文件及保险公司系统签署，预计约一小时。</p>
+  <p><b>特别出行告知：</b>签单流程文件要求确认：未来12个月内，无论出行时长与目的，是否计划前往、居住或过境下列国家或地区：</p>
+  <ul class="country-list">
+    <li>巴林</li><li>塞浦路斯</li><li>埃及</li><li>伊朗</li><li>伊拉克</li><li>以色列</li><li>约旦</li><li>科威特</li><li>黎巴嫩</li><li>阿曼</li><li>巴勒斯坦</li><li>卡塔尔</li><li>沙特阿拉伯</li><li>叙利亚</li><li>土耳其</li><li>阿拉伯联合酋长国（阿联酋）</li><li>也门</li>
+  </ul>
+  <div class="note">请按实际出行计划如实告知。具体是否影响投保或签单安排，以保险公司及服务群内同事的最新要求为准。</div>
+`},
 // ========== 核保类 ==========
-{cat:'uw-process', q:'定寿可以预核保吗？', risk:'warn', a:`
+{cat:'apply-health', q:'定寿可以预核保吗？', risk:'warn', a:`
   <p>如存在体况不确定是否能投保，可以先提交预核保。</p>
   <div class="note">所有提交的医疗报告都需要是英文，或者需要由认证翻译机构翻译成英文的中文报告，<b>不接受 AI 翻译的医疗报告</b>。</div>
 `},
-{cat:'uw-disease', q:'高血压可以投保吗？', risk:'warn', a:`
+{cat:'apply-health', q:'高血压可以投保吗？', risk:'warn', a:`
   <p>仅仅只是血压偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
   <p>客户需要提供半年内的血压报告（需医生同一天内连续测三次），报告需经过认证翻译成英文。</p>
   <div class="note">如果客户还有其他问题，或叠加高血脂、肥胖、脂肪肝、多发结节，承保概率就很低了。</div>
 `},
-{cat:'uw-disease', q:'糖尿病可以投保吗？', risk:'warn', a:`
+{cat:'apply-health', q:'糖尿病可以投保吗？', risk:'warn', a:`
   <p>仅仅只是血糖偏高，且客户注意身体、吃药控制（需要如实申报吃药控制情况），且没有其他身体问题，相对承保概率较高。</p>
   <p>客户需要半年内的以下报告，且需经过认证翻译成英文：</p>
   <ul>
@@ -530,12 +708,12 @@ const DATA = [
   </ul>
   <div class="note">如果客户还有其他问题，比如高血压、多发结节，或高血脂、肥胖、肾脏问题，承保概率就很低了。</div>
 `},
-{cat:'uw-disease', q:'心脏病可以投保吗？', risk:'no', a:`
+{cat:'apply-health', q:'心脏病可以投保吗？', risk:'no', a:`
   <p>不可以。定期寿险的定位就是核保严格，确诊心脏类型/心血管类型疾病很难承保。</p>
   <div class="note">注意：确诊心脏类疾病一般要看心脏专科；有一些血液指标也能反映心脏风险，但不能作为确诊依据，仅仅血液指标偏高，通常是加费处理。<br><br>
   比如血液指标 CRP，其升高与动脉粥样硬化和冠心病风险增加相关，可作为预测心血管事件的参考指标之一。当 CRP 浓度超过 3 毫克/升时，心血管风险会明显升高。</div>
 `},
-{cat:'uw-disease', q:'有结节可以投保吗？', risk:'ok', a:`
+{cat:'apply-health', q:'有结节可以投保吗？', risk:'ok', a:`
   <p>一般结节长期稳定，大多数可以投保定寿；如果是投保消费型重疾，有结节的器官会被除外。</p>
   <ul>
     <li>乳腺/甲状腺结节：小于等于三级</li>
@@ -543,16 +721,16 @@ const DATA = [
   </ul>
   <p>需要报告证明结节长期稳定，一般要求两次报告，前后间隔 6 个月且结节没有明显变化。报告需认证翻译成英文。</p>
 `},
-{cat:'uw-disease', q:'吸烟会比不吸烟贵吗？', risk:'warn', a:`
+{cat:'quote-premium', q:'吸烟会比不吸烟贵吗？', risk:'warn', a:`
   <p>会，一般贵 20%。需如实申报吸烟与否，不管一年抽多少根，只要吸烟就按吸烟费率计算，<b>包括电子烟</b>。</p>
   <div class="note">如购买保单后两年客户才开始吸烟，这种情况一般不影响后续保费。</div>
 `},
-{cat:'uw-disease', q:'癌症痊愈后可以投保吗？', risk:'no', a:`
+{cat:'apply-health', q:'癌症痊愈后可以投保吗？', risk:'no', a:`
   <p>定寿一般要求癌症痊愈超过 <b>10 年</b>。</p>
   <p>案例参考：一位甲状腺乳头状癌（甲状腺癌中最常见、也最好治疗的类型）患者痊愈 7 年，投保定寿时每一家保险公司都被拒绝了。</p>
   <p>IUL 一般癌症痊愈超过 5 年有希望承保。</p>
 `},
-{cat:'uw-disease', q:'肿瘤标记物类型核保', risk:'warn', a:`
+{cat:'apply-health', q:'肿瘤标记物类型核保', risk:'warn', a:`
   <p>如果客户肿瘤标记物高于正常值，定期寿险中一般直接拒保；除非客户能提供后续报告证明肿瘤标记物已回归正常值。</p>
   <div class="note">
   <b>医学逻辑：</b>肿瘤标记物高不代表一定患癌，该指标本身并不十分准确。<br>
@@ -564,7 +742,7 @@ const DATA = [
     <li>情况2：长期标记物偏高，提供间隔一年的 2-3 次报告，确认无癌症，IUL 会视情况承保，可能加费也可能标准体。</li>
   </ul>
 `},
-{cat:'uw-disease', q:'还有哪些小众实操核保经验？', risk:'warn', a:`
+{cat:'apply-health', q:'还有哪些小众实操核保经验？', risk:'warn', a:`
   <ul>
     <li>中度呼吸暂停症 —— 加费 50%</li>
     <li>CRP 偏高 + 高血脂 —— 加费 50%（CRP 升高与动脉粥样硬化、冠心病风险相关；当 CRP 浓度超过 3 毫克/升时，心血管风险明显升高）</li>
@@ -581,11 +759,11 @@ const DATA = [
     <li>公司给 key person（关键人）投保，需文件证明其 key person 身份，比如持股证明 —— 一般 IUL 较多，定期寿险几乎没有这类案例</li>
   </ul>
 `},
-{cat:'apply-eligibility', q:'客户不会英文，需要 trusted individual 陪同，可以是什么类型的人？', risk:'warn', a:`
+{cat:'apply-remote', q:'客户不会英文，需要 trusted individual 陪同，可以是什么类型的人？', risk:'warn', a:`
   <p>如果客户不懂英文，必须有一位客户本人指定的、可信赖的人员陪同，即 "trusted individual"（信任个体）。</p>
   <div class="note">需要注意：这位陪同人员不能与客户存在利益关联，例如转介绍人、合作伙伴等均不符合条件，因为可能引发利益冲突，不能担任客户的 trusted individual。</div>
 `},
-{cat:'apply-limits', q:'定期寿险免体检额是多少？', risk:'ok', a:`
+{cat:'quote-limits', q:'定期寿险免体检额是多少？', risk:'ok', a:`
   <p><b>非新加坡居民（无新加坡长期签证）</b></p>
   <table>
     <tr><th>年龄</th><th>免体检额</th></tr>
@@ -603,25 +781,25 @@ const DATA = [
     <tr><td>56 岁 – 60 岁</td><td>约 50 万新币，约合 35 万美金</td></tr>
   </table>
 `},
-{cat:'apply-term', q:'定期寿险最多可以保到多少岁？', risk:'ok', a:`
+{cat:'product-term', q:'定期寿险最多可以保到多少岁？', risk:'ok', a:`
   <p>新 JP 人寿定期寿险保障期限最长可至 <b>99 岁</b>。若被保险人在 99 岁前未发生身故，保险公司不会退还保费。</p>
 `},
-{cat:'apply-term', q:'最晚多少岁投保？', risk:'warn', a:`
+{cat:'apply-eligibility', q:'最晚多少岁投保？', risk:'warn', a:`
   <p>理论上最晚可至 <b>74 周岁</b>，但实际核保要求非常严格。</p>
   <div class="note">对于 60 岁以上且保额超过免体检额的投保申请，成功承保的案例极少。</div>
 `},
-{cat:'apply-term', q:'可以选择的保障年限是多少？', risk:'ok', a:`
+{cat:'product-term', q:'可以选择的保障年限是多少？', risk:'ok', a:`
   <p>到 85 岁之前可以灵活选择保障期；超过 85 岁，只有「保到 99 岁」一个选项。</p>
 `},
-{cat:'apply-term', q:'保障至 99 岁未发生死亡，会退保费吗？', risk:'no', a:`
+{cat:'product-term', q:'保障至 99 岁未发生死亡，会退保费吗？', risk:'no', a:`
   <p>不退。但新 JP 人寿这款产品如果选择保至 99 岁 + Limited Pay（有限缴费期 5 年 / 10 年 / 到 65 岁 / 到 75 岁），就会有现金价值，可以退现金价值。</p>
 `},
-{cat:'apply-term', q:'Regular Pay 和 Limited Pay 区别是什么？', risk:'ok', a:`
+{cat:'product-term', q:'Regular Pay 和 Limited Pay 区别是什么？', risk:'ok', a:`
   <p><b>Regular Pay：</b>保障期和缴费期相同，例如保障期限 40 年、缴费期也是 40 年。这种形式通常是消费型的，没有任何现金价值，遵循「交一年管一年」的原则。保到 85 岁之前灵活选择保障期，超过 85 岁只有保到 99 岁一个选项，保额 50 万以上每年均可享受保费 7 折折扣（4.21 起需附加全残才可享受折扣）。</p>
   <p><b>Limited Pay：</b>缴费期比保障期短，例如保障至 99 岁但缴费期仅 10 年。由于缴费期短于保障期，这种形式通常具有现金价值。目前缴费期只有 5 Pay、10 Pay、缴纳至 65 ANB 和 75 ANB 选项，保障期全都只能选择保障到 99 岁。没有保费 7 折折扣。</p>
 `},
-{cat:'apply-term', q:'定寿是不是均衡费率，保障期内保费不会增加？', risk:'ok', a:`<p>对，保障期内保费均衡，不会增加。</p>`},
-{cat:'apply-benefit', q:'如果叠加了重疾或全残，怎么赔付？等待期是多久？', risk:'ok', a:`
+{cat:'product-term', q:'定寿是不是均衡费率，保障期内保费不会增加？', risk:'ok', a:`<p>对，保障期内保费均衡，不会增加。</p>`},
+{cat:'product-benefit', q:'如果叠加了重疾或全残，怎么赔付？等待期是多久？', risk:'ok', a:`
   <p>人寿/全残部分没有等待期；如果附加重疾，重疾的等待期是 <b>90 天</b>。</p>
   <p><b>叠加全残保障：</b></p>
   <ul>
@@ -636,7 +814,7 @@ const DATA = [
   </ul>
   <div class="note">重疾赔付后客户仍生存，需注意剩余保额的相应调整（如全残/身故保额相应减少）；全残赔付优先于身故赔付，即全残发生后合同终止。</div>
 `},
-{cat:'apply-benefit', q:'重大疾病都包括哪些？', risk:'ok', a:`
+{cat:'product-benefit', q:'重大疾病都包括哪些？', risk:'ok', a:`
   <p>新加坡人寿保险协会（LIA）受 MAS 监管，制定了 37 种重大疾病（Critical Illness）的标准化定义，涵盖主要癌症、心脑血管疾病、神经系统疾病等：</p>
   <ul>
     <li>严重癌症（Major Cancer）</li>
@@ -679,21 +857,21 @@ const DATA = [
   </ul>
   <div class="note">此处 Critical Illness 指重大疾病的严重状态，不包含轻症状态（Early Critical Illness）。以严重癌症为例：不包括原位癌，甲状腺癌/前列腺癌等需超过 T1N0M0，更接近疾病危重状态。</div>
 `},
-{cat:'apply-benefit', q:'全残（TPD）具体如何定义？', risk:'ok', a:`
+{cat:'product-benefit', q:'全残（TPD）具体如何定义？', risk:'ok', a:`
   <p>新加坡定期寿险中的全残定义主要包含两种标准：</p>
   <p><b>1. 躯体残疾标准：</b>双目及四肢（手腕及以下、脚踝及以下）这六个部位中，有两个或以上部位受损，导致永久性丧失工作能力，如双下肢瘫痪等。</p>
   <p><b>2. 日常生活能力标准：</b>无法独立完成 6 项基本日常生活活动中的至少 3 项，包括：穿衣、移动（如从床上到椅子）、行动（行走）、如厕、进食、洗澡。</p>
 `},
-{cat:'apply-limits', q:'可以买超过免体检额的保额吗？', risk:'warn', a:`
+{cat:'quote-limits', q:'可以买超过免体检额的保额吗？', risk:'warn', a:`
   <p>可以，但需在新加坡完成体检。若保额超过免体检额，客户需在新加坡停留超过一周（通常从提交申请到收到体检通知函后，需预约诊所并完成体检）。</p>
 `},
-{cat:'apply-benefit', q:'有没有什么免责条款？', risk:'no', a:`
+{cat:'product-benefit', q:'有没有什么免责条款？', risk:'no', a:`
   <ul>
     <li>一年内自杀不保</li>
     <li>如隐瞒身体状况，保险公司有权拒赔</li>
   </ul>
 `},
-{cat:'apply-limits', q:'一个人最多可以买多少保额？', risk:'ok', a:`
+{cat:'quote-limits', q:'一个人最多可以买多少保额？', risk:'ok', a:`
   <p><b>寿险 & 全残保额限制（按年收入倍数）：</b></p>
   <ul>
     <li>≤ 40 岁：最高为年收入的 30 倍</li>
@@ -716,7 +894,7 @@ const DATA = [
     <li>根据收入计算的父母符合条件保额的 50%</li>
   </ul>
 `},
-{cat:'apply-eligibility', q:'没有收入的人最多可以买多少定期寿险？', risk:'warn', a:`
+{cat:'quote-limits', q:'没有收入的人最多可以买多少定期寿险？', risk:'warn', a:`
   <p>无需财务证明，最多 75 万新币（约合 50 万美金）；超过需提供证明材料，身故赔偿保额上限为以下三项中的最高值：</p>
   <ul>
     <li>相当于在职配偶现行有效保单的保额</li>
@@ -724,7 +902,7 @@ const DATA = [
     <li>个人净资产的 30%</li>
   </ul>
 `},
-{cat:'apply-limits', q:'单张保费最低要求是多少？', risk:'ok', a:`
+{cat:'quote-premium', q:'单张保费最低要求是多少？', risk:'ok', a:`
   <p>单张 1000 美金以上（或等额新币，约 1400 新币）。保费可以通过延长缴费期、添加重疾/全残来增加；远程签单不可以体检，总保额通常控制在免体检额度内。</p>
 `},
 {cat:'apply-eligibility', q:'可以接受的投保地区有哪些？', risk:'warn', a:`
@@ -733,7 +911,7 @@ const DATA = [
   <p><b>Residency 2：</b>印度尼西亚（非主要城市）、越南（新加坡籍）、印度（主要城市）、菲律宾、泰国、捷克共和国、巴林、科威特、南非（非主要城市）、牙买加、蒙特塞拉特、波兰、斯洛伐克、沙特阿拉伯、南非（主要城市）</p>
   <p><b>Residency 3：</b>西萨摩亚、越南（非新加坡籍）、佛得角群岛、埃及、萨尔瓦多、危地马拉、洪都拉斯、斯里兰卡、斯里兰卡（科伦坡）</p>
 `},
-{cat:'apply-limits', q:'需不需要申报在中国大陆和香港的寿险/重大疾病保额？', risk:'warn', a:`
+{cat:'quote-limits', q:'需不需要申报在中国大陆和香港的寿险/重大疾病保额？', risk:'warn', a:`
   <p>在新 JP 人寿保险公司申请的寿险额度没有超过 140 万美金是不需要体检的，但一个人的总保额需要符合财务核保逻辑。</p>
   <ul>
     <li>新加坡的寿险总保额超过 300 万美金，通常要填写 financial questionnaire（财务问卷）</li>
@@ -744,7 +922,7 @@ const DATA = [
 `},
 
 // ========== 远程签单类 ==========
-{cat:'remote-region', q:'免飞（远程签单）地区有哪些？', risk:'ok', a:`
+{cat:'apply-remote', q:'免飞（远程签单）地区有哪些？', risk:'ok', a:`
   <p>可以远程签单的客户仅限居住于：</p>
   <ul>
     <li>中国主要城市（不含新疆、西藏）</li>
@@ -754,18 +932,18 @@ const DATA = [
     <li>印尼主要城市</li>
   </ul>
 `},
-{cat:'remote-finance', q:'免飞入新加坡需要满足什么财务要求？', risk:'warn', a:`
+{cat:'apply-remote', q:'免飞入新加坡需要满足什么财务要求？', risk:'warn', a:`
   <p>满足以下之一即可：</p>
   <ul>
     <li>年收入：12 万新币（可以是公司提供的收入证明）</li>
     <li>或流动总资产：大于 20 万新币（可以是银行月结单、股票账户余额、支付宝余额）</li>
   </ul>
 `},
-{cat:'remote-finance', q:'免飞入新加坡的财务要求仅仅针对保单持有人吗？', risk:'ok', a:`
+{cat:'apply-remote', q:'免飞入新加坡的财务要求仅仅针对保单持有人吗？', risk:'ok', a:`
   <p>对，被保人没有财务证明要求。</p>
   <p>例如：若太太不符合财务要求，可由符合要求的先生作为投保人，太太作为被保人进行投保。需要注意，若被保人年龄超过 18 岁，需在远程签单时上线完成电子签名。</p>
 `},
-{cat:'remote-client', q:'什么样的客户不接受远程签单？', risk:'no', a:`
+{cat:'apply-remote', q:'什么样的客户不接受远程签单？', risk:'no', a:`
   <p>如果是 <b>Selected Client</b>，不可以做远程签单。满足以下两项内容即属于 Selected Client：</p>
   <ul>
     <li>年纪 ≥ 61 岁</li>
@@ -776,10 +954,10 @@ const DATA = [
 `},
 
 // ========== 付款类型问题 ==========
-{cat:'pay-account', q:'可以用第三方账户付款吗？', risk:'warn', a:`
+{cat:'apply-payment', q:'可以用第三方账户付款吗？', risk:'warn', a:`
   <p>付款通常需要本人账户。如需用到其他人的账户付款，通常该账户必须是<b>直系亲属</b>的，且需要在投保时就申报使用直系亲属账户付款。</p>
 `},
-{cat:'pay-account', q:'中国客户常用的优选银行有哪些？', risk:'ok', a:`
+{cat:'apply-payment', q:'中国客户常用的优选银行有哪些？', risk:'ok', a:`
   <div class="note">以下银行通常内地分行不行，需要是港澳分行；部分特别标注仅新加坡分行。建议使用新加坡系银行。</div>
   <ul>
     <li>DBS Bank Ltd 星展银行</li>
@@ -797,10 +975,10 @@ const DATA = [
     <li>Standard Chartered Bank (Singapore) 渣打银行（仅限新加坡支行）</li>
   </ul>
 `},
-{cat:'pay-account', q:'付款长期需要用港澳账户/境外账户吗？', risk:'warn', a:`
+{cat:'apply-payment', q:'付款长期需要用港澳账户/境外账户吗？', risk:'warn', a:`
   <p>内地账户通常不能直接付款境外保单，客户需要长期拥有港澳账户来缴费。</p>
 `},
-{cat:'pay-method', q:'如何转账缴纳保费？', risk:'ok', a:`
+{cat:'apply-payment', q:'如何转账缴纳保费？', risk:'ok', a:`
   <p>转账时备注保单号，记得选择转账手续费扣费在自己账户；如果银行 app 不能选择手续费扣在自己账户，建议多转 25 美金/30 新币，预留转账费用。</p>
   <div class="note">如果新 JP 人寿保险公司收不到足额保费，会导致保单不能生效/失效。</div>
   <p><b>收款人：</b>Singapore Life Ltd.<br>
@@ -815,29 +993,29 @@ const DATA = [
   SWIFT 代码：DBSSSGSGXXX<br>
   收款账号：003-958595-0</p>
 `},
-{cat:'pay-method', q:'可以用信用卡付保费吗？', risk:'warn', a:`
+{cat:'apply-payment', q:'可以用信用卡付保费吗？', risk:'warn', a:`
   <p>可以，境外/港澳信用卡可以，但<b>仅限第一年保费</b>。</p>
 `},
 
 // ========== 受益人 ==========
-{cat:'benef-rules', q:'哪些人可以是受益人？', risk:'ok', a:`
+{cat:'product-beneficiary', q:'哪些人可以是受益人？', risk:'ok', a:`
   <p>无限制关系：受益人可以是与被保险人无婚姻或血缘关系的任何人。</p>
 `},
-{cat:'benef-rules', q:'受益人变更流程是怎样的？', risk:'ok', a:`
+{cat:'product-beneficiary', q:'受益人变更流程是怎样的？', risk:'ok', a:`
   <p>灵活调整：受益人可随时更改，只需提交一份新的受益人表格，覆盖原信息即可生效。</p>
 `},
-{cat:'benef-rules', q:'受益人未满 18 岁，发生理赔可以接受理赔款吗？', risk:'warn', a:`
+{cat:'product-beneficiary', q:'受益人未满 18 岁，发生理赔可以接受理赔款吗？', risk:'warn', a:`
   <p>若受益人未满 18 岁，理赔款将支付至其监护人账户。</p>
 `},
-{cat:'benef-rules', q:'可以设置多个受益人吗？', risk:'ok', a:`
+{cat:'product-beneficiary', q:'可以设置多个受益人吗？', risk:'ok', a:`
   <p>可以指定多个受益人，总分配比例需为 100%（例如：A 占 50%、B 占 30%、C 占 20%）。</p>
 `},
 
 // ========== 赔付类 ==========
-{cat:'claim-account', q:'受益人一定要有海外账户吗？', risk:'warn', a:`
+{cat:'product-claim', q:'受益人一定要有海外账户吗？', risk:'warn', a:`
   <p>一般大额赔付到内地账户相对困难，需要受益人拥有港澳/海外账户。</p>
 `},
-{cat:'claim-process', q:'理赔需要哪些文件？', risk:'ok', a:`
+{cat:'product-claim', q:'理赔需要哪些文件？', risk:'ok', a:`
   <p><b>寿险理赔：</b></p>
   <ul>
     <li>受益人填写的理赔申请表（claim form）</li>
@@ -856,7 +1034,7 @@ const DATA = [
   </ul>
   <div class="note">非英文文件需要翻译。</div>
 `},
-{cat:'claim-process', q:'理赔需要本人去新加坡吗？', risk:'ok', a:`
+{cat:'product-claim', q:'理赔需要本人去新加坡吗？', risk:'ok', a:`
   <p>不需要，远程提交文件电子版即可。</p>
 `},
 
@@ -894,7 +1072,7 @@ const DATA = [
   <p>计划书语言：中文或英文（目前大 DF、宏 L、全 M、永 M 均提供中文计划书）</p>
   <div class="note">同事会尽快回复您。</div>
 `},
-{cat:'quote-discount', q:'定寿的 7 折是每年都有吗？', risk:'ok', a:`
+{cat:'quote-premium', q:'定寿的 7 折是每年都有吗？', risk:'ok', a:`
   <p><b>定期缴费（Regular Pay）：</b>缴费期 = 保障期。保到 85 岁之前灵活选择保障期，超过 85 岁只有保到 99 岁一个选项，保额 50 万以上每年均可享受保费 7 折折扣（4.21 起需附加全残附加险才可享受折扣）。</p>
 `},
 ];
